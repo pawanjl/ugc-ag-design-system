@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button/button"
 import { SendIcon } from "lucide-react"
 import { FaqSection } from "@/components/ds/FaqSection"
+import { Divider } from "@/components/ds/Divider"
 
 export function DashboardShell({
     children,
@@ -28,6 +29,7 @@ export function DashboardShell({
                         <div className="flex flex-1 flex-col min-w-0 overflow-hidden">
                             {/* Sticky top bar */}
                             <Topbar />
+                            <Divider />
 
                             {/* Scrollable page content */}
                             <div className="relative flex-1 min-h-0 overflow-y-auto bg-background styled-scrollbar">

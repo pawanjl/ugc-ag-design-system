@@ -7,6 +7,7 @@ import { StaggerContainer, StaggerItem } from "@/components/animations/stagger-c
 import { SlideUp } from "@/components/animations/slide-up"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button/button"
+import { Divider } from "@/components/ds/Divider"
 
 export default function DashboardPage() {
     const metrics = [
@@ -21,6 +22,7 @@ export default function DashboardPage() {
             <SlideUp className="flex flex-col gap-2">
                 <h1 className="text-3xl font-bold tracking-tight text-foreground">Overview</h1>
                 <p className="text-muted-foreground">Welcome back. Here&apos;s what&apos;s happening today.</p>
+                <Divider className="mt-2" />
             </SlideUp>
 
             <StaggerContainer className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
