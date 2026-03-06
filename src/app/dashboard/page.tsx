@@ -14,22 +14,22 @@ export default function DashboardPage() {
     return (
         <div className="flex flex-col gap-8">
             <SlideUp className="flex flex-col gap-2">
-                <h1 className="text-3xl font-bold tracking-tight text-white">Overview</h1>
-                <p className="text-zinc-400">Welcome back. Here's what's happening today.</p>
+                <h1 className="text-3xl font-bold tracking-tight text-foreground">Overview</h1>
+                <p className="text-muted-foreground">Welcome back. Here's what's happening today.</p>
             </SlideUp>
 
             <StaggerContainer className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 {metrics.map((metric, i) => (
                     <StaggerItem key={i}>
-                        <Card className="bg-[#1a1a1a] border-[#27272a] rounded-xl hover:bg-[#1a1a1a]/80 hover:scale-[1.02] shadow-sm transition-all duration-300 group cursor-pointer h-full">
+                        <Card className="bg-card border-border rounded-xl hover:bg-accent/50 hover:scale-[1.02] shadow-sm transition-all duration-300 group cursor-pointer h-full">
                             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                <CardTitle className="text-sm font-medium text-zinc-300">{metric.title}</CardTitle>
-                                <div className="h-8 w-8 rounded-full bg-[#0a0a0a] flex items-center justify-center group-hover:bg-[#a855f7]/10 transition-colors">
-                                    <metric.icon className="h-4 w-4 text-zinc-500 group-hover:text-[#a855f7] transition-colors" />
+                                <CardTitle className="text-sm font-medium text-muted-foreground">{metric.title}</CardTitle>
+                                <div className="h-8 w-8 rounded-full bg-background flex items-center justify-center group-hover:bg-[#a855f7]/10 transition-colors">
+                                    <metric.icon className="h-4 w-4 text-muted-foreground group-hover:text-[#a855f7] transition-colors" />
                                 </div>
                             </CardHeader>
                             <CardContent>
-                                <div className="text-2xl font-bold text-white">{metric.value}</div>
+                                <div className="text-2xl font-bold text-card-foreground">{metric.value}</div>
                                 <p className="text-xs text-emerald-500 mt-1">{metric.change}</p>
                             </CardContent>
                         </Card>
@@ -39,25 +39,25 @@ export default function DashboardPage() {
 
             <StaggerContainer className="grid gap-4 md:grid-cols-2 lg:grid-cols-7 mt-2">
                 <StaggerItem className="col-span-4 block">
-                    <Card className="h-full bg-[#1a1a1a] border-[#27272a] rounded-xl overflow-hidden">
+                    <Card className="h-full bg-card border-border rounded-xl overflow-hidden">
                         <CardHeader>
-                            <CardTitle className="text-white">Usage Analytics</CardTitle>
+                            <CardTitle className="text-card-foreground">Usage Analytics</CardTitle>
                         </CardHeader>
                         <CardContent className="px-6">
-                            <div className="flex h-[350px] items-center justify-center text-zinc-600 border border-dashed border-[#27272a] rounded-xl bg-[#0a0a0a]/50">
+                            <div className="flex h-[350px] items-center justify-center text-muted-foreground/50 border border-dashed border-border rounded-xl bg-background/50">
                                 [Chart Placeholder]
                             </div>
                         </CardContent>
                     </Card>
                 </StaggerItem>
                 <StaggerItem className="col-span-3 block">
-                    <Card className="h-full bg-[#1a1a1a] border-[#27272a] rounded-xl overflow-hidden">
+                    <Card className="h-full bg-card border-border rounded-xl overflow-hidden">
                         <CardHeader>
-                            <CardTitle className="text-white">Recent Generations</CardTitle>
-                            <CardDescription className="text-zinc-400">You've generated 14 audio files today.</CardDescription>
+                            <CardTitle className="text-card-foreground">Recent Generations</CardTitle>
+                            <CardDescription className="text-muted-foreground">You've generated 14 audio files today.</CardDescription>
                         </CardHeader>
                         <CardContent>
-                            <div className="flex h-[350px] items-center justify-center text-zinc-600 border border-dashed border-[#27272a] rounded-xl bg-[#0a0a0a]/50">
+                            <div className="flex h-[350px] items-center justify-center text-muted-foreground/50 border border-dashed border-border rounded-xl bg-background/50">
                                 [List Placeholder]
                             </div>
                         </CardContent>

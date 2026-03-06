@@ -49,74 +49,86 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
+  --background: #ffffff;
+  --foreground: #0f0f10;
+  --card: #ffffff;
+  --card-foreground: #0f0f10;
+  --popover: #ffffff;
+  --popover-foreground: #0f0f10;
   --primary: oklch(0.546 0.215 262.881);
   /* Indigo */
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  --secondary: #f4f4f5;
+  --secondary-foreground: #0f0f10;
+  --muted: #f4f4f5;
+  --muted-foreground: #6b6b78;
+  --accent: #f4f4f5;
+  --accent-foreground: #0f0f10;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --border: #e4e4e7;
+  --input: #e4e4e7;
+  --ring: rgba(168, 85, 247, 0.4);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  /* Sidebar always uses the dark palette regardless of light/dark mode */
-  --sidebar: #0a0a0a;
-  --sidebar-foreground: #e5e5e8;
+  /* Sidebar light palette */
+  --sidebar: #ffffff;
+  --sidebar-foreground: #18181b;
   --sidebar-primary: #a855f7;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #1a1a1a;
-  --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: #1a1a1a;
+  --sidebar-accent: #f4f4f5;
+  --sidebar-accent-foreground: #18181b;
+  --sidebar-border: #e5e7eb;
   --sidebar-ring: #a855f7;
+  /* App-level theme variables (light) */
+  --bg-shell: #fafafa;
+  --bg-sidebar-bg: #ffffff;
+  --bg-popup: #ffffff;
+  --bg-popup-hover: #f4f4f5;
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
+  /* ── ElevenLabs dark palette ───────────────── */
+  --background: #0a0a0b;
+  --foreground: #e5e5e8;
+  /* ✅ was #000000 — black text on black bg */
+  --card: #161618;
+  --card-foreground: #e5e5e8;
+  --popover: #1e1e20;
+  --popover-foreground: #e5e5e8;
   --primary: oklch(0.546 0.215 262.881);
   /* Indigo */
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --secondary: #1e1e20;
+  --secondary-foreground: #e5e5e8;
+  --muted: #1e1e20;
+  --muted-foreground: #8b8b99;
+  --accent: #1f1f23;
+  --accent-foreground: #e5e5e8;
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --border: rgba(255, 255, 255, 0.07);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: rgba(168, 85, 247, 0.5);
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: #0a0a0a;
+  --sidebar: #0a0a0b;
   --sidebar-foreground: #e5e5e8;
   --sidebar-primary: #a855f7;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #1a1a1a;
-  --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: #1a1a1a;
+  --sidebar-accent: #1a1a1d;
+  --sidebar-accent-foreground: #e5e5e8;
+  --sidebar-border: rgba(255, 255, 255, 0.06);
   --sidebar-ring: #a855f7;
+  /* App-level theme variables (dark) */
+  --bg-shell: #0f0f10;
+  --bg-sidebar-bg: #0a0a0b;
+  --bg-popup: #1e1e20;
+  --bg-popup-hover: #2a2a2e;
 }
 
 @layer base {

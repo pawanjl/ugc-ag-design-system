@@ -88,7 +88,7 @@ export function ProfileMenu({
         <div
             className={cn(
                 "w-[224px] rounded-[10px] overflow-hidden",
-                "bg-[rgba(15,15,16,0.92)] backdrop-blur-[4px]",
+                "bg-(--bg-popup) backdrop-blur-[4px]",
                 // layered shadow matching Figma
                 "shadow-[0px_0px_0px_1px_rgba(229,229,232,0.08),0px_1px_1px_-0.5px_rgba(0,0,0,0.2),0px_3px_3px_0px_rgba(0,0,0,0.16),0px_6px_6px_0px_rgba(0,0,0,0.12),0px_12px_12px_0px_rgba(0,0,0,0.1),0px_24px_24px_0px_rgba(0,0,0,0.08)]",
                 className
