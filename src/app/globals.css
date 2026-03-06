@@ -49,6 +49,10 @@
 
 :root {
   --radius: 0.625rem;
+  --button-radius: 9999px;
+  /* Enforced pill-shape for standard buttons */
+  --button-padding-x: 1.5rem;
+  /* Global standard spacing */
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -126,6 +130,14 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
   }
 }
 
