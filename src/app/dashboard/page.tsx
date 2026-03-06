@@ -1,7 +1,12 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { BarChart3, Bot, Mic, Sparkles } from "lucide-react"
+"use client"
+
+import { Card as CardContainer } from "@/components/ds/Card"
+import { Card as ShadcnCard, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { BarChart3, Bot, Mic, Sparkles, Send, BellRing, Terminal } from "lucide-react"
 import { StaggerContainer, StaggerItem } from "@/components/animations/stagger-container"
 import { SlideUp } from "@/components/animations/slide-up"
+import { toast } from "sonner"
+import { Button } from "@/components/ui/button/button"
 
 export default function DashboardPage() {
     const metrics = [
@@ -14,54 +19,114 @@ export default function DashboardPage() {
     return (
         <div className="flex flex-col gap-8">
             <SlideUp className="flex flex-col gap-2">
-                <h1 className="text-3xl font-bold tracking-tight text-white">Overview</h1>
-                <p className="text-zinc-400">Welcome back. Here's what's happening today.</p>
+                <h1 className="text-3xl font-bold tracking-tight text-foreground">Overview</h1>
+                <p className="text-muted-foreground">Welcome back. Here&apos;s what&apos;s happening today.</p>
             </SlideUp>
 
             <StaggerContainer className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                 {metrics.map((metric, i) => (
                     <StaggerItem key={i}>
-                        <Card className="bg-[#1a1a1a] border-[#27272a] rounded-xl hover:bg-[#1a1a1a]/80 hover:scale-[1.02] shadow-sm transition-all duration-300 group cursor-pointer h-full">
-                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                <CardTitle className="text-sm font-medium text-zinc-300">{metric.title}</CardTitle>
-                                <div className="h-8 w-8 rounded-full bg-[#0a0a0a] flex items-center justify-center group-hover:bg-[#a855f7]/10 transition-colors">
-                                    <metric.icon className="h-4 w-4 text-zinc-500 group-hover:text-[#a855f7] transition-colors" />
+                        <CardContainer className="hover:scale-[1.02] cursor-pointer h-full transition-all duration-300 group">
+                            <div className="flex flex-col flex-1">
+                                <div className="flex items-center justify-between mb-2">
+                                    <span className="text-sm font-medium text-muted-foreground">{metric.title}</span>
+                                    <div className="h-8 w-8 rounded-full bg-muted flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+                                        <metric.icon className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                                    </div>
                                 </div>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="text-2xl font-bold text-white">{metric.value}</div>
+                                <div className="text-2xl font-bold text-foreground">{metric.value}</div>
                                 <p className="text-xs text-emerald-500 mt-1">{metric.change}</p>
-                            </CardContent>
-                        </Card>
+                            </div>
+                        </CardContainer>
                     </StaggerItem>
                 ))}
             </StaggerContainer>
 
             <StaggerContainer className="grid gap-4 md:grid-cols-2 lg:grid-cols-7 mt-2">
                 <StaggerItem className="col-span-4 block">
-                    <Card className="h-full bg-[#1a1a1a] border-[#27272a] rounded-xl overflow-hidden">
-                        <CardHeader>
-                            <CardTitle className="text-white">Usage Analytics</CardTitle>
-                        </CardHeader>
-                        <CardContent className="px-6">
-                            <div className="flex h-[350px] items-center justify-center text-zinc-600 border border-dashed border-[#27272a] rounded-xl bg-[#0a0a0a]/50">
+                    <CardContainer className="h-full block">
+                        <div className="flex flex-col gap-6">
+                            <div className="flex items-center justify-between">
+                                <h3 className="text-lg font-semibold text-foreground">Usage Analytics</h3>
+                                <div className="flex gap-2">
+                                    <Button 
+                                        variant="outline" 
+                                        size="sm" 
+                                        onClick={() => toast.success("Analytics data updated", {
+                                            description: "We've fetched the latest usage stats for your account."
+                                        })}
+                                        className="h-8 rounded-lg"
+                                    >
+                                        Update
+                                    </Button>
+                                    <Button 
+                                        variant="outline" 
+                                        size="sm"
+                                        onClick={() => toast.error("Failed to sync data", {
+                                            description: "Please check your network connection and try again."
+                                        })}
+                                        className="h-8 rounded-lg"
+                                    >
+                                        Sync
+                                    </Button>
+                                </div>
+                            </div>
+                            <div className="flex h-[300px] items-center justify-center text-muted-foreground border border-dashed border-border rounded-xl bg-muted/20">
                                 [Chart Placeholder]
                             </div>
-                        </CardContent>
-                    </Card>
+                            
+                            <div className="pt-2">
+                                <h4 className="text-sm font-medium text-muted-foreground mb-3 px-1">Quick Actions</h4>
+                                <div className="flex flex-wrap gap-2">
+                                    <Button 
+                                        variant="outline" 
+                                        className="rounded-xl border-border/60 hover:bg-accent"
+                                        leftIcon={<Send className="h-4 w-4" />}
+                                        onClick={() => toast("Draft Saved", {
+                                            description: "Your changes have been saved to local storage."
+                                        })}
+                                    >
+                                        Save Draft
+                                    </Button>
+                                    <Button 
+                                        variant="outline" 
+                                        className="rounded-xl border-border/60 hover:bg-accent"
+                                        leftIcon={<BellRing className="h-4 w-4" />}
+                                        onClick={() => toast.info("System Notification", {
+                                            description: "A new security update is available for your workspace."
+                                        })}
+                                    >
+                                        Notifications
+                                    </Button>
+                                    <Button 
+                                        variant="outline" 
+                                        className="rounded-xl border-border/60 hover:bg-accent"
+                                        leftIcon={<Terminal className="h-4 w-4" />}
+                                        onClick={() => toast.promise(new Promise(resolve => setTimeout(resolve, 2000)), {
+                                            loading: 'Processing request...',
+                                            success: 'Request completed successfully',
+                                            error: 'Error processing request',
+                                        })}
+                                    >
+                                        Run Task
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
+                    </CardContainer>
                 </StaggerItem>
                 <StaggerItem className="col-span-3 block">
-                    <Card className="h-full bg-[#1a1a1a] border-[#27272a] rounded-xl overflow-hidden">
-                        <CardHeader>
-                            <CardTitle className="text-white">Recent Generations</CardTitle>
-                            <CardDescription className="text-zinc-400">You've generated 14 audio files today.</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="flex h-[350px] items-center justify-center text-zinc-600 border border-dashed border-[#27272a] rounded-xl bg-[#0a0a0a]/50">
+                    <CardContainer className="h-full block">
+                        <div className="flex flex-col gap-4">
+                            <div className="flex flex-col gap-1">
+                                <h3 className="text-lg font-semibold text-foreground">Recent Generations</h3>
+                                <p className="text-sm text-muted-foreground">You&apos;ve generated 14 audio files today.</p>
+                            </div>
+                            <div className="flex h-[350px] items-center justify-center text-muted-foreground border border-dashed border-border rounded-xl bg-muted/20">
                                 [List Placeholder]
                             </div>
-                        </CardContent>
-                    </Card>
+                        </div>
+                    </CardContainer>
                 </StaggerItem>
             </StaggerContainer>
         </div>

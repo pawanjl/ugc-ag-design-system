@@ -46,9 +46,9 @@ export function SearchInput({
     return (
         <div className={cn("flex items-center gap-2", className)}>
             {/* Search field */}
-            <div className="relative flex-1 flex items-center h-10 rounded-xl border border-[rgba(0,0,29,0.15)] bg-[#0a0a0a] overflow-hidden">
+            <div className="relative flex-1 flex items-center h-10 rounded-xl border border-border bg-background overflow-hidden">
                 {/* Icon */}
-                <Search className="absolute left-2.5 w-[18px] h-[18px] text-[rgba(229,229,232,0.5)] shrink-0 pointer-events-none" />
+                <Search className="absolute left-2.5 w-[18px] h-[18px] text-muted-foreground/50 shrink-0 pointer-events-none" />
 
                 {/* Input */}
                 <input
@@ -57,7 +57,7 @@ export function SearchInput({
                     value={value}
                     onChange={(e) => onChange?.(e.target.value)}
                     placeholder={placeholder}
-                    className="h-full w-full bg-transparent pl-9 pr-3 text-[14px] font-medium text-[#e5e5e8] placeholder:text-[rgba(229,229,232,0.4)] outline-none"
+                    className="h-full w-full bg-transparent pl-9 pr-3 text-[14px] font-medium text-foreground placeholder:text-muted-foreground outline-none"
                 />
             </div>
 
@@ -65,7 +65,7 @@ export function SearchInput({
             {action && (
                 <button
                     onClick={action.onClick}
-                    className="shrink-0 h-10 px-4 rounded-xl bg-[#e5e5e8] text-[#0a0a0a] text-[14px] font-medium whitespace-nowrap hover:bg-white transition-colors"
+                    className="shrink-0 h-10 px-4 rounded-xl bg-foreground text-background text-[14px] font-medium whitespace-nowrap hover:bg-foreground/90 transition-colors"
                 >
                     {action.label}
                 </button>

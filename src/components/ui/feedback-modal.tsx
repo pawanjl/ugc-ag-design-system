@@ -44,7 +44,7 @@ export function FeedbackModal({ children, onSubmit }: FeedbackModalProps) {
         <form id="feedback-form" onSubmit={handleSubmit}>
           <label className="text-sm font-medium flex flex-col gap-2">
             <textarea 
-              className="flex min-h-[60px] w-full rounded-[10px] border border-[#2a2a2a] bg-transparent px-3 py-2 text-sm placeholder:text-[#5b5b64] focus-visible:outline-none focus-visible:border-[#e5e5e8]/30 focus-visible:ring-[0.5px] focus-visible:ring-[#e5e5e8]/30 focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 transition duration-100 resize-none" 
+              className="flex min-h-[60px] w-full rounded-[10px] border border-border bg-transparent px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:border-foreground/30 focus-visible:ring-[0.5px] focus-visible:ring-foreground/30 focus-visible:ring-offset-0 disabled:cursor-not-allowed disabled:opacity-50 transition duration-100 resize-none" 
               name="feedback" 
               placeholder="Type your feedback here..." 
               rows={4}
@@ -56,8 +56,8 @@ export function FeedbackModal({ children, onSubmit }: FeedbackModalProps) {
         </form>
       </div>
       <div className="flex items-center justify-between gap-10 mt-1">
-        <p className="text-xs text-[#5b5b64] font-normal leading-tight">
-          We don't respond to submissions, but we read all of them carefully
+        <p className="text-xs text-muted-foreground font-normal leading-tight">
+          We don&apos;t respond to submissions, but we read all of them carefully
         </p>
         <Button 
           type="submit" 

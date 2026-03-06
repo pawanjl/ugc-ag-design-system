@@ -112,18 +112,18 @@ export function PricingCard({
         <div
             className={cn(
                 "relative flex flex-col w-[280px] rounded-[20px] pt-6 overflow-hidden",
-                "bg-[rgba(18,18,20,0.95)] backdrop-blur-sm",
+                "bg-card/95 backdrop-blur-sm",
                 highlighted
-                    ? "ring-2 ring-[rgba(168,85,247,0.5)] shadow-[0px_0px_0px_1px_rgba(168,85,247,0.2),0px_8px_24px_rgba(0,0,0,0.4)]"
-                    : "shadow-[0px_1px_3px_0px_rgba(0,0,0,0.3),0px_1px_2px_-1px_rgba(0,0,0,0.2)] ring-1 ring-[rgba(229,229,232,0.08)]",
+                    ? "ring-2 ring-primary/50 shadow-[0px_0px_0px_1px_rgba(var(--primary),0.2),0px_8px_24px_rgba(0,0,0,0.4)]"
+                    : "shadow-[0px_1px_3px_0px_rgba(0,0,0,0.3),0px_1px_2px_-1px_rgba(0,0,0,0.2)] ring-1 ring-border/10",
                 className
             )}
         >
             {/* ── Header / sticky ──────────────────────────────── */}
-            <div className="sticky top-0 z-10 flex flex-col gap-3 px-5 bg-[rgba(18,18,20,0.95)] pb-1">
+            <div className="sticky top-0 z-10 flex flex-col gap-3 px-5 bg-card/95 pb-1">
                 {/* Plan name + badge */}
                 <div className="flex items-center justify-between">
-                    <h3 className="text-[18px] font-medium leading-[26px] tracking-[-0.045px] text-[rgba(229,229,232,0.9)]">
+                    <h3 className="text-[18px] font-medium leading-[26px] tracking-[-0.045px] text-foreground/90">
                         {planName}
                     </h3>
                     {promoBadge && (
@@ -142,18 +142,18 @@ export function PricingCard({
                 {/* Price row */}
                 <div className="flex items-end gap-2">
                     {originalPrice && (
-                        <span className="text-[18px] font-bold leading-[26px] tracking-[-0.045px] text-[rgba(229,229,232,0.35)] line-through">
+                        <span className="text-[18px] font-bold leading-[26px] tracking-[-0.045px] text-muted-foreground/40 line-through">
                             {originalPrice}
                         </span>
                     )}
-                    <div className="flex items-end text-[rgba(229,229,232,0.9)]">
+                    <div className="flex items-end text-foreground/90">
                         <span className="text-[24px] font-bold leading-[30px] tracking-[-0.15px]">{price}</span>
                         <span className="text-[16px] font-normal leading-[24px]">{priceSuffix}</span>
                     </div>
                 </div>
 
                 {/* Description */}
-                <p className="text-[16px] font-normal leading-6 text-[rgba(229,229,232,0.45)]">
+                <p className="text-[16px] font-normal leading-6 text-muted-foreground/50">
                     {description}
                 </p>
 
@@ -163,8 +163,8 @@ export function PricingCard({
                         onClick={onCta}
                         className={cn(
                             "w-full h-9 rounded-[10px] px-3",
-                            "bg-[rgba(229,229,232,0.9)] hover:bg-white",
-                            "text-[14px] font-medium text-[#0a0a0a] leading-5",
+                            "bg-foreground/90 hover:bg-foreground",
+                            "text-[14px] font-medium text-background leading-5",
                             "transition-colors"
                         )}
                     >
@@ -178,23 +178,23 @@ export function PricingCard({
                 {featureGroups.map((group, gi) => (
                     <React.Fragment key={gi}>
                         {gi > 0 && (
-                            <div className="h-px bg-[rgba(229,229,232,0.05)] my-1" />
+                            <div className="h-px bg-border/10 my-1" />
                         )}
                         {group.map((feat, fi) => (
                             <div
                                 key={fi}
                                 className={cn(
                                     "flex items-center gap-2 h-[44px]",
-                                    fi < group.length - 1 && "border-b border-[rgba(229,229,232,0.06)]"
+                                    fi < group.length - 1 && "border-b border-border/10"
                                 )}
                             >
-                                <Check className="w-4 h-4 shrink-0 text-[rgba(229,229,232,0.4)]" />
+                                <Check className="w-4 h-4 shrink-0 text-muted-foreground/40" />
                                 <div className="flex flex-col">
-                                    <span className="text-[14px] font-normal leading-5 text-[rgba(229,229,232,0.75)]">
+                                    <span className="text-[14px] font-normal leading-5 text-foreground/75">
                                         {feat.label}
                                     </span>
                                     {feat.subLabel && (
-                                        <span className="text-[12px] text-[rgba(229,229,232,0.4)]">{feat.subLabel}</span>
+                                        <span className="text-[12px] text-muted-foreground/40">{feat.subLabel}</span>
                                     )}
                                 </div>
                             </div>
