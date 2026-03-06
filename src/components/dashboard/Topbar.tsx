@@ -9,6 +9,7 @@ import {
     Settings2,
     LogOut,
     User,
+    Sparkles,
 } from "lucide-react"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Input } from "@/components/ui/input"

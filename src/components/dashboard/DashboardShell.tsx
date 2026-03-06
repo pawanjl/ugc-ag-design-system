@@ -8,6 +8,7 @@ import { DockLayout, DockContent, DockPanel } from "@/components/ui/dock-layout"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button/button"
 import { SendIcon } from "lucide-react"
+import { FaqSection } from "@/components/ds/FaqSection"
 
 export function DashboardShell({
     children,
@@ -33,6 +34,7 @@ export function DashboardShell({
                                 <main className="p-6 lg:p-8" style={{ scrollbarGutter: "stable" }}>
                                     <div className="mx-auto max-w-6xl space-y-8 pb-12">
                                         {children}
+                                        <FaqSection />
                                     </div>
                                 </main>
                             </div>
