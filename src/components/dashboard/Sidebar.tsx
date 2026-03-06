@@ -37,6 +37,12 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 // ── Nav Data (mirrors the Figma structure exactly) ──────────────────────────
 
@@ -231,9 +237,14 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
                 </div>
                 {/* Collapsed icon-only state */}
                 <div className="hidden group-data-[collapsible=icon]:flex items-center justify-center">
-                    <button className="h-8 w-8 flex items-center justify-center rounded-lg border border-[#2a2a2a] bg-[#a855f7]/10 hover:bg-[#a855f7]/20 transition-colors">
-                        <Zap className="h-4 w-4 text-[#a855f7]" />
-                    </button>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <button className="h-8 w-8 flex items-center justify-center rounded-lg border border-[#2a2a2a] bg-[#a855f7]/10 hover:bg-[#a855f7]/20 transition-colors">
+                                <Zap className="h-4 w-4 text-[#a855f7]" />
+                            </button>
+                        </TooltipTrigger>
+                        <TooltipContent side="right">Upgrade</TooltipContent>
+                    </Tooltip>
                 </div>
             </SidebarFooter>
 
