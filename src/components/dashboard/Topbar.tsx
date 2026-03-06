@@ -152,8 +152,8 @@ export function Topbar() {
                         <TooltipTrigger asChild>
                             <DropdownMenuTrigger asChild>
                                 <button className="
-                                    flex items-center gap-2 pl-1 pr-2 py-1
-                                    rounded-lg
+                                    flex items-center justify-center p-0.5
+                                    rounded-full
                                     hover:bg-[#1a1a1a]
                                     transition-all duration-200
                                     focus-visible:outline-none
@@ -161,17 +161,13 @@ export function Topbar() {
                                 ">
                                     {/* Gradient ring avatar */}
                                     <div className="h-7 w-7 rounded-full bg-gradient-to-tr from-[#a855f7] to-[#22c55e] p-[1.5px] shrink-0">
-                                        <Avatar className="h-full w-full">
+                                        <Avatar className="h-full w-full" status="online" size="md">
                                             <AvatarImage src="https://github.com/shadcn.png" alt="@user" />
                                             <AvatarFallback className="bg-[#0a0a0a] text-[11px] text-white font-medium">
                                                 EC
                                             </AvatarFallback>
                                         </Avatar>
                                     </div>
-                                    <span className="hidden md:block text-[13px] font-medium text-[#e5e5e8] max-w-[100px] truncate">
-                                        ElevenCreative
-                                    </span>
-                                    <ChevronDown className="hidden md:block h-3.5 w-3.5 text-[#5b5b64] shrink-0" />
                                 </button>
                             </DropdownMenuTrigger>
                         </TooltipTrigger>
