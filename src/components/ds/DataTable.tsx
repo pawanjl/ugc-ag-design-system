@@ -64,7 +64,7 @@ export function DataTable<T extends Record<string, unknown>>({
     return (
         <div
             className={cn(
-                "w-full border border-[rgba(0,0,29,0.12)] rounded-lg overflow-auto",
+                "w-full border border-border/10 rounded-xl overflow-hidden bg-card/30 backdrop-blur-sm shadow-sm",
                 className
             )}
             style={{ maxHeight }}
@@ -72,13 +72,13 @@ export function DataTable<T extends Record<string, unknown>>({
             <table className="w-full border-collapse text-[12px]">
                 {/* Sticky header */}
                 <thead>
-                    <tr className="sticky top-0 z-10 bg-[#0a0a0a] border-b border-[rgba(0,0,29,0.08)]">
+                    <tr className="sticky top-0 z-10 bg-muted/30 backdrop-blur-md border-b border-border/10">
                         {columns.map((col) => (
                             <th
                                 key={col.key}
                                 style={{ width: col.width }}
                                 className={cn(
-                                    "h-9 px-2.5 font-medium text-[rgba(229,229,232,0.5)] whitespace-nowrap text-left align-middle",
+                                    "h-11 px-4 font-semibold text-[11px] uppercase tracking-wider text-muted-foreground/50 whitespace-nowrap text-left align-middle",
                                     col.align === "right" && "text-right",
                                     col.align === "center" && "text-center"
                                 )}
@@ -108,15 +108,15 @@ export function DataTable<T extends Record<string, unknown>>({
                                 key={rowIdx}
                                 onClick={() => onRowClick?.(row)}
                                 className={cn(
-                                    "border-b border-[rgba(0,0,29,0.08)] last:border-b-0 transition-colors",
-                                    onRowClick && "cursor-pointer hover:bg-[#0f0f10]"
+                                    "border-b border-border/5 last:border-b-0 transition-colors group/row",
+                                    onRowClick && "cursor-pointer hover:bg-primary/[0.02]"
                                 )}
                             >
                                 {columns.map((col, colIdx) => (
                                     <td
                                         key={col.key}
                                         className={cn(
-                                            "px-2.5 py-1.5 align-middle whitespace-nowrap text-[rgba(229,229,232,0.85)]",
+                                            "px-4 py-3 align-middle whitespace-nowrap text-[13px] text-foreground/80 font-medium",
                                             col.align === "right" && "text-right",
                                             col.align === "center" && "text-center"
                                         )}
@@ -129,13 +129,13 @@ export function DataTable<T extends Record<string, unknown>>({
 
                                 {/* Row action button */}
                                 {onRowAction && (
-                                    <td className="w-9 px-1 align-middle">
+                                    <td className="w-12 px-1 align-middle text-right pr-3">
                                         <button
                                             onClick={(e) => { e.stopPropagation(); onRowAction(row) }}
                                             aria-label="Row options"
-                                            className="size-9 rounded-[10px] flex items-center justify-center text-[rgba(229,229,232,0.4)] hover:bg-[#1a1a1a] hover:text-[#e5e5e8] transition-colors"
+                                            className="size-8 rounded-lg flex items-center justify-center text-muted-foreground/30 hover:bg-secondary/20 hover:text-foreground transition-all ml-auto"
                                         >
-                                            <MoreHorizontal className="w-[18px] h-[18px]" />
+                                            <MoreHorizontal className="w-4 h-4" />
                                         </button>
                                     </td>
                                 )}

@@ -22,6 +22,7 @@ import {
     ChevronDown,
     Plus,
     Shield,
+    CreditCard,
 } from "lucide-react"
 
 import {
@@ -44,12 +45,15 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip"
 
+import { usePathname } from "next/navigation"
+
 // ── Nav Data (mirrors the Figma structure exactly) ──────────────────────────
 
 const mainNavItems = [
-    { title: "Home", url: "/dashboard", icon: Home, isActive: true },
+    { title: "Home", url: "/dashboard", icon: Home },
     { title: "Voices", url: "#", icon: Mic, badge: "+" },
     { title: "Files", url: "#", icon: FileText },
+    { title: "Billing", url: "/dashboard/billing", icon: CreditCard },
 ]
 
 const playgroundItems = [
@@ -82,7 +86,10 @@ interface NavItemProps {
     tag?: string
 }
 
-function NavItem({ title, url, icon: Icon, isActive, tag }: NavItemProps) {
+function NavItem({ title, url, icon: Icon, isActive: propIsActive, tag }: NavItemProps) {
+    const pathname = usePathname()
+    const isActive = propIsActive ?? (url !== "#" && pathname === url)
+
     return (
         <SidebarMenuItem>
             <SidebarMenuButton
