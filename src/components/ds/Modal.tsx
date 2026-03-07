@@ -3,7 +3,7 @@
 import * as React from "react"
 import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { X } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button/button"
@@ -41,7 +41,7 @@ const ModalContent = React.forwardRef<
       ref={ref}
       asChild
       className={cn(
-        "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg gap-4",
+        "fixed left-[50%] top-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] sm:max-w-lg max-h-[90vh] overflow-y-auto gap-4",
         "bg-card/70 backdrop-blur-xl p-6 shadow-2xl outline-none border border-border",
         "rounded-3xl", // Design system standard
         className

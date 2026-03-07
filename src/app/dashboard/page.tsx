@@ -8,6 +8,7 @@ import { SlideUp } from "@/components/animations/slide-up"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button/button"
 import { Divider } from "@/components/ds/Divider"
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { 
     Modal, 
     ModalContent, 
@@ -18,7 +19,6 @@ import {
     ModalTrigger,
     ModalClose,
 } from "@/components/ds/Modal"
-import { useState } from "react"
 
 export default function DashboardPage() {
     const metrics = [
@@ -56,121 +56,132 @@ export default function DashboardPage() {
             </StaggerContainer>
 
             <StaggerContainer className="grid gap-4 md:grid-cols-2 lg:grid-cols-7 mt-2">
-                <StaggerItem className="col-span-4 block">
-                    <CardContainer className="h-full block">
-                        <div className="flex flex-col gap-6">
-                            <div className="flex items-center justify-between">
-                                <h3 className="text-lg font-semibold text-foreground">Usage Analytics</h3>
-                                <div className="flex gap-2">
-                                    <Button 
-                                        variant="outline" 
-                                        size="sm" 
-                                        onClick={() => toast.success("Analytics data updated", {
-                                            description: "We've fetched the latest usage stats for your account."
-                                        })}
-                                        className="h-8 rounded-lg"
-                                    >
-                                        Update
-                                    </Button>
-                                    <Button 
-                                        variant="outline" 
-                                        size="sm"
-                                        onClick={() => toast.error("Failed to sync data", {
-                                            description: "Please check your network connection and try again."
-                                        })}
-                                        className="h-8 rounded-lg"
-                                    >
-                                        Sync
-                                    </Button>
-                                </div>
-                            </div>
-                            <div className="flex h-[300px] items-center justify-center text-muted-foreground border border-dashed border-border rounded-xl bg-muted/20">
-                                [Chart Placeholder]
-                            </div>
-                            
-                            <div className="pt-2">
-                                <h4 className="text-sm font-medium text-muted-foreground mb-3 px-1">Quick Actions</h4>
-                                <div className="flex flex-wrap gap-2">
-                                    <Button 
-                                        variant="outline" 
-                                        className="rounded-xl border-border/60 hover:bg-accent"
-                                        leftIcon={<Send className="h-4 w-4" />}
-                                        onClick={() => toast("Draft Saved", {
-                                            description: "Your changes have been saved to local storage."
-                                        })}
-                                    >
-                                        Save Draft
-                                    </Button>
-                                    <Button 
-                                        variant="outline" 
-                                        className="rounded-xl border-border/60 hover:bg-accent"
-                                        leftIcon={<BellRing className="h-4 w-4" />}
-                                        onClick={() => toast.info("System Notification", {
-                                            description: "A new security update is available for your workspace."
-                                        })}
-                                    >
-                                        Notifications
-                                    </Button>
-                                    <Button 
-                                        variant="outline" 
-                                        className="rounded-xl border-border/60 hover:bg-accent"
-                                        leftIcon={<Terminal className="h-4 w-4" />}
-                                        onClick={() => toast.promise(new Promise(resolve => setTimeout(resolve, 2000)), {
-                                            loading: 'Processing request...',
-                                            success: 'Request completed successfully',
-                                            error: 'Error processing request',
-                                        })}
-                                    >
-                                        Run Task
-                                    </Button>
-
-                                    <Modal>
-                                        <ModalTrigger asChild>
-                                            <Button 
-                                                variant="outline" 
-                                                className="rounded-xl border-border/60 hover:bg-accent"
-                                                leftIcon={<Sparkles className="h-4 w-4" />}
-                                            >
-                                                Open Modal
-                                            </Button>
-                                        </ModalTrigger>
-                                        <ModalContent>
-                                            <ModalHeader>
-                                                <ModalTitle>Generic Modal Component</ModalTitle>
-                                                <ModalDescription>
-                                                    This modal follows your premium design system with 3xl rounded corners and semantic theme colors.
-                                                </ModalDescription>
-                                            </ModalHeader>
-                                            <div className="py-4 text-sm text-foreground/80">
-                                                You can place any content here. It automatically supports light and dark themes using your CSS variables.
-                                            </div>
-                                            <ModalFooter>
-                                                <ModalClose asChild>
-                                                    <Button variant="outline" className="rounded-full">Close</Button>
-                                                </ModalClose>
-                                                <Button className="rounded-full">Primary Action</Button>
-                                            </ModalFooter>
-                                        </ModalContent>
-                                    </Modal>
-                                </div>
-                            </div>
-                        </div>
-                    </CardContainer>
-                </StaggerItem>
-                <StaggerItem className="col-span-3 block">
-                    <CardContainer className="h-full block">
-                        <div className="flex flex-col gap-4">
-                            <div className="flex flex-col gap-1">
-                                <h3 className="text-lg font-semibold text-foreground">Recent Generations</h3>
-                                <p className="text-sm text-muted-foreground">You&apos;ve generated 14 audio files today.</p>
-                            </div>
-                            <div className="flex h-[350px] items-center justify-center text-muted-foreground border border-dashed border-border rounded-xl bg-muted/20">
-                                [List Placeholder]
-                            </div>
-                        </div>
-                    </CardContainer>
-                </StaggerItem>
+                {/* ... existing cells ... */}
             </StaggerContainer>
+
+            <SlideUp className="flex flex-col gap-6 mt-4 pb-20">
+                <div className="flex flex-col gap-1">
+                    <h2 className="text-2xl font-bold tracking-tight text-foreground">Premium Tabs</h2>
+                    <p className="text-muted-foreground">Smooth, context-aware animations built with Radix UI and Framer Motion.</p>
+                </div>
+                
+                <div className="grid gap-6 md:grid-cols-2">
+                    {/* Pill Variant */}
+                    <CardContainer className="flex flex-col gap-6">
+                        <div className="flex flex-col gap-1">
+                            <h3 className="text-lg font-semibold">Pill Style</h3>
+                            <p className="text-sm text-muted-foreground">Floating background indicator that follows the text.</p>
+                        </div>
+                        <Tabs defaultValue="account" variant="pill">
+                            <TabsList className="w-full justify-start">
+                                <TabsTrigger value="account" layoutId="pill-indicator">Account</TabsTrigger>
+                                <TabsTrigger value="password" layoutId="pill-indicator">Password</TabsTrigger>
+                                <TabsTrigger value="settings" layoutId="pill-indicator">Settings</TabsTrigger>
+                            </TabsList>
+                            <TabsContent value="account" className="p-4 border border-dashed rounded-xl bg-muted/10 h-32">
+                                <p className="text-sm">Manage your profile and account settings here.</p>
+                            </TabsContent>
+                            <TabsContent value="password" className="p-4 border border-dashed rounded-xl bg-muted/10 h-32">
+                                <p className="text-sm">Keep your account secure by rotating passwords.</p>
+                            </TabsContent>
+                            <TabsContent value="settings" className="p-4 border border-dashed rounded-xl bg-muted/10 h-32">
+                                <p className="text-sm">Configure your preferred app notifications.</p>
+                            </TabsContent>
+                        </Tabs>
+                    </CardContainer>
+
+                    {/* Underline Variant */}
+                    <CardContainer className="flex flex-col gap-6">
+                        <div className="flex flex-col gap-1">
+                            <h3 className="text-lg font-semibold">Underline Style</h3>
+                            <p className="text-sm text-muted-foreground">Minimalist sliding line for clean dashboards.</p>
+                        </div>
+                        <Tabs defaultValue="overview" variant="underline">
+                            <TabsList className="gap-8">
+                                <TabsTrigger value="overview" layoutId="underline-indicator">Overview</TabsTrigger>
+                                <TabsTrigger value="analytics" layoutId="underline-indicator">Analytics</TabsTrigger>
+                                <TabsTrigger value="history" layoutId="underline-indicator">History</TabsTrigger>
+                            </TabsList>
+                            <TabsContent value="overview" className="p-4 border border-dashed rounded-xl bg-muted/10 h-32">
+                                <p className="text-sm">Summary of your recent activities and stats.</p>
+                            </TabsContent>
+                            <TabsContent value="analytics" className="p-4 border border-dashed rounded-xl bg-muted/10 h-32">
+                                <p className="text-sm">Deep dive into usage metrics and patterns.</p>
+                            </TabsContent>
+                            <TabsContent value="history" className="p-4 border border-dashed rounded-xl bg-muted/10 h-32">
+                                <p className="text-sm">Historical record of all your generated assets.</p>
+                            </TabsContent>
+                        </Tabs>
+                    </CardContainer>
+
+                    {/* Standard/Default Variant */}
+                    <CardContainer className="flex flex-col gap-6">
+                        <div className="flex flex-col gap-1">
+                            <h3 className="text-lg font-semibold">Default Style</h3>
+                            <p className="text-sm text-muted-foreground">Standard inset background indicator.</p>
+                        </div>
+                        <Tabs defaultValue="all" variant="default">
+                            <TabsList className="grid grid-cols-3 w-full">
+                                <TabsTrigger value="all" layoutId="default-indicator">All</TabsTrigger>
+                                <TabsTrigger value="unread" layoutId="default-indicator">Unread</TabsTrigger>
+                                <TabsTrigger value="archived" layoutId="default-indicator">Archived</TabsTrigger>
+                            </TabsList>
+                            <TabsContent value="all" className="p-4 border border-dashed rounded-xl bg-muted/10 h-32">
+                                <p className="text-sm">Showing all messages in your workspace.</p>
+                            </TabsContent>
+                            <TabsContent value="unread" className="p-4 border border-dashed rounded-xl bg-muted/10 h-32">
+                                <p className="text-sm">You have 5 items that require your attention.</p>
+                            </TabsContent>
+                            <TabsContent value="archived" className="p-4 border border-dashed rounded-xl bg-muted/10 h-32">
+                                <p className="text-sm">No archived conversations found.</p>
+                            </TabsContent>
+                        </Tabs>
+                    </CardContainer>
+
+                    {/* Ghost Variant */}
+                    <CardContainer className="flex flex-col gap-6">
+                        <div className="flex flex-col gap-1">
+                            <h3 className="text-lg font-semibold">Ghost Style</h3>
+                            <p className="text-sm text-muted-foreground">Subtle indicators for tertiary navigation.</p>
+                        </div>
+                        <Tabs defaultValue="desktop" variant="ghost">
+                            <TabsList className="w-full justify-start px-0 gap-1">
+                                <TabsTrigger 
+                                    value="desktop" 
+                                    layoutId="ghost-indicator"
+                                    indicatorClassName="bg-primary/10 shadow-none border border-primary/20"
+                                >
+                                    Desktop
+                                </TabsTrigger>
+                                <TabsTrigger 
+                                    value="mobile" 
+                                    layoutId="ghost-indicator"
+                                    indicatorClassName="bg-primary/10 shadow-none border border-primary/20"
+                                >
+                                    Mobile
+                                </TabsTrigger>
+                                <TabsTrigger 
+                                    value="api" 
+                                    layoutId="ghost-indicator"
+                                    indicatorClassName="bg-primary/10 shadow-none border border-primary/20"
+                                >
+                                    API
+                                </TabsTrigger>
+                            </TabsList>
+                            <TabsContent value="desktop" className="p-4 border border-dashed rounded-xl bg-muted/10 h-32">
+                                <p className="text-sm">Optimizing view for large screen devices.</p>
+                            </TabsContent>
+                            <TabsContent value="mobile" className="p-4 border border-dashed rounded-xl bg-muted/10 h-32">
+                                <p className="text-sm">Previewing mobile responsiveness and layout.</p>
+                            </TabsContent>
+                            <TabsContent value="api" className="p-4 border border-dashed rounded-xl bg-muted/10 h-32">
+                                <p className="text-sm">Direct access to raw data and endpoints.</p>
+                            </TabsContent>
+                        </Tabs>
+                    </CardContainer>
+                </div>
+            </SlideUp>
+
         </div>
     )
 }
