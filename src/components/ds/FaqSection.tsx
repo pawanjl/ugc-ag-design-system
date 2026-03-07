@@ -1,8 +1,9 @@
 "use client"
 
-import React, { useState } from "react"
-import { ChevronDown, RefreshCcw } from "lucide-react"
+import React from "react"
+import { RefreshCcw } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { AccordionGroup } from "@/components/ui/accordion"
 
 /**
  * FaqSection
@@ -108,12 +109,6 @@ export function FaqSection({
     initialOpen = -1,
     className,
 }: FaqSectionProps) {
-    const [openIndex, setOpenIndex] = useState<number>(initialOpen)
-
-    function toggle(i: number) {
-        setOpenIndex((prev) => (prev === i ? -1 : i))
-    }
-
     return (
         <section
             className={cn(
@@ -143,48 +138,16 @@ export function FaqSection({
                 </div>
 
                 {/* ── Accordion list ── */}
-                <div className="flex flex-col">
-                    {items.map((item, i) => {
-                        const isOpen = openIndex === i
-                        return (
-                            <div
-                                key={i}
-                                className="border-b border-[rgba(229,229,232,0.08)]"
-                            >
-                                {/* Question trigger */}
-                                <button
-                                    onClick={() => toggle(i)}
-                                    className="w-full flex items-center justify-between py-4 text-left group"
-                                    aria-expanded={isOpen}
-                                >
-                                    <span className="text-[14px] font-medium text-[rgba(229,229,232,0.85)] leading-5 pr-4">
-                                        {item.question}
-                                    </span>
-                                    <ChevronDown
-                                        className={cn(
-                                            "w-4 h-4 shrink-0 text-[rgba(229,229,232,0.4)] transition-transform duration-200",
-                                            isOpen && "rotate-180"
-                                        )}
-                                    />
-                                </button>
-
-                                {/* Answer panel */}
-                                <div
-                                    className={cn(
-                                        "overflow-hidden transition-all duration-200",
-                                        isOpen ? "max-h-48 opacity-100" : "max-h-0 opacity-0"
-                                    )}
-                                >
-                                    {item.answer && (
-                                        <p className="text-[14px] font-normal text-[rgba(229,229,232,0.55)] leading-5 pb-4">
-                                            {item.answer}
-                                        </p>
-                                    )}
-                                </div>
-                            </div>
-                        )
-                    })}
-                </div>
+                <AccordionGroup
+                    type="single"
+                    collapsible
+                    defaultValue={initialOpen !== -1 ? `item-${initialOpen}` : undefined}
+                    items={items.map((item, i) => ({
+                        id: `item-${i}`,
+                        trigger: item.question,
+                        content: item.answer,
+                    }))}
+                />
             </div>
         </section>
     )

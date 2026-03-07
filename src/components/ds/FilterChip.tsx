@@ -50,7 +50,7 @@ export function FilterChip({
         return (
             <div
                 className={cn(
-                    "inline-flex items-center h-6 rounded-lg bg-[#0f0f10] border border-transparent px-1 py-px gap-1 shrink-0",
+                    "inline-flex items-center h-6 rounded-lg bg-primary border border-transparent px-1 py-px gap-1 shrink-0",
                     className
                 )}
             >
@@ -60,18 +60,18 @@ export function FilterChip({
                     aria-label={`Remove ${label} filter`}
                     className="size-4 rounded-full flex items-center justify-center shrink-0 hover:bg-white/10 transition-colors"
                 >
-                    <X className="w-2.5 h-2.5 text-white rotate-0" />
+                    <X className="w-2.5 h-2.5 text-primary-foreground rotate-0" />
                 </button>
 
                 {/* Label */}
-                <span className="text-[12px] font-medium leading-4 tracking-[0.03px] text-white whitespace-nowrap px-0.5">
+                <span className="text-[12px] font-medium leading-4 tracking-[0.03px] text-primary-foreground whitespace-nowrap px-0.5">
                     {label}
                 </span>
 
                 {/* Optional count separator */}
                 {count !== undefined && (
-                    <span className="flex items-center pl-2.5 border-l border-[#494950] ml-px">
-                        <span className="text-[12px] font-medium leading-4 tracking-[0.03px] text-white whitespace-nowrap pr-1">
+                    <span className="flex items-center pl-2.5 border-l border-primary-foreground/20 ml-px">
+                        <span className="text-[12px] font-medium leading-4 tracking-[0.03px] text-primary-foreground whitespace-nowrap pr-1">
                             {countLabel ?? count}
                         </span>
                     </span>
@@ -85,13 +85,13 @@ export function FilterChip({
         <button
             onClick={onAdd}
             className={cn(
-                "inline-flex items-center h-6 rounded-lg bg-[#0a0a0a] border border-[rgba(0,0,29,0.08)] px-1 py-px gap-1 shrink-0",
-                "hover:bg-[#141414] hover:border-[#262626] transition-colors",
+                "inline-flex items-center h-6 rounded-lg bg-muted border border-border px-1 py-px gap-1 shrink-0",
+                "hover:bg-accent hover:border-border transition-colors",
                 className
             )}
         >
-            <Plus className="w-3.5 h-3.5 text-[#e5e5e8] shrink-0" />
-            <span className="text-[12px] font-medium leading-4 tracking-[0.03px] text-[#e5e5e8] whitespace-nowrap pr-0.5">
+            <Plus className="w-3.5 h-3.5 text-foreground shrink-0" />
+            <span className="text-[12px] font-medium leading-4 tracking-[0.03px] text-foreground whitespace-nowrap pr-0.5">
                 {label}
             </span>
         </button>
@@ -127,9 +127,9 @@ export function FilterBar({ chips, onClearAll, className }: FilterBarProps) {
                 <button
                     onClick={onClearAll}
                     aria-label="Clear all filters"
-                    className="size-6 rounded-md flex items-center justify-center hover:bg-[#1a1a1a] transition-colors"
+                    className="size-6 rounded-md flex items-center justify-center hover:bg-accent transition-colors"
                 >
-                    <X className="w-3 h-3 text-[rgba(229,229,232,0.5)]" />
+                    <X className="w-3 h-3 text-muted-foreground/50" />
                 </button>
             )}
         </div>

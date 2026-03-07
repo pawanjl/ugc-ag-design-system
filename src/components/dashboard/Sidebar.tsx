@@ -37,6 +37,12 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
 import { usePlatform } from "@/components/dashboard/platform-context"
 
 // ── Nav Data per platform ────────────────────────────────────────────────────
@@ -124,8 +130,8 @@ function NavItem({ title, url, icon: Icon, isActive, tag }: NavItemProps) {
                     group/item h-8 rounded-[10px] px-2 gap-2
                     transition-all duration-200 ease-in-out
                     ${isActive
-                        ? "bg-sidebar-accent text-sidebar-foreground font-medium"
-                        : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground"
+                        ? "bg-[#1a1a1a] text-white font-medium"
+                        : "text-[#5b5b64] hover:bg-[#1a1a1a] hover:text-[#e5e5e8]"
                     }
                 `}
             >
@@ -186,28 +192,19 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
 
             <SidebarContent className="bg-sidebar overflow-x-hidden">
                 {/* ── Platform Switcher ───────────────────────────── */}
-                <div className="px-3 pt-2 group-data-[collapsible=icon]:hidden relative">
-                    <button
-                        type="button"
-                        onClick={toggleWorkspaceMenu}
-                        className="w-full flex items-center gap-2 px-2 py-1 rounded-[10px] bg-sidebar-accent border border-sidebar-border shadow-[0px_2px_4px_0px_rgba(0,0,0,0.1)] hover:bg-sidebar-accent/80 transition-colors duration-200"
-                        aria-haspopup="listbox"
-                        aria-expanded={isWorkspaceMenuOpen}
-                    >
+                <div className="px-3 pt-2 group-data-[collapsible=icon]:hidden">
+                    <button className="w-full flex items-center gap-2 px-2 py-1 rounded-[10px] bg-[#111111] border border-[#1f1f1f] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.3)] hover:bg-[#161616] transition-colors duration-200">
                         {/* Workspace avatar */}
                         <div className="flex h-8 w-8 shrink-0 items-center justify-center">
-                            <div className="h-5 w-5 rounded-full bg-gradient-to-br from-[#a855f7] to-[#22c55e] flex items-center justify-center text-[8px] font-bold text-white">
+                            <div className="h-5 w-5 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-[8px] font-bold text-white">
                                 E
                             </div>
                         </div>
                         <div className="flex flex-1 items-center justify-between min-w-0">
-                            <span className="text-[14px] font-medium text-sidebar-foreground truncate max-w-[130px]">
-                                {workspaceLabel}
+                            <span className="text-[14px] font-medium text-white truncate max-w-[130px]">
+                                ElevenCreative
                             </span>
-                            <ChevronDown
-                                className={`h-4 w-4 text-sidebar-foreground/50 shrink-0 ml-2 transition-transform ${isWorkspaceMenuOpen ? "rotate-180" : ""
-                                    }`}
-                            />
+                            <ChevronDown className="h-4 w-4 text-[#5b5b64] shrink-0 ml-2" />
                         </div>
                     </button>
 
@@ -221,8 +218,8 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
                                 type="button"
                                 onClick={() => handleWorkspaceSelect("elevenCreative")}
                                 className={`flex w-full items-center gap-2 px-2 py-1.5 text-left text-[13px] rounded-[10px] ${platform === "elevenCreative"
-                                        ? "bg-sidebar-accent text-sidebar-foreground"
-                                        : "text-sidebar-foreground/70 hover:bg-sidebar-accent"
+                                    ? "bg-sidebar-accent text-sidebar-foreground"
+                                    : "text-sidebar-foreground/70 hover:bg-sidebar-accent"
                                     }`}
                             >
                                 <span className="flex-1 truncate">ElevenCreative</span>
@@ -231,8 +228,8 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
                                 type="button"
                                 onClick={() => handleWorkspaceSelect("elevenAgents")}
                                 className={`flex w-full items-center gap-2 px-2 py-1.5 text-left text-[13px] rounded-[10px] ${platform === "elevenAgents"
-                                        ? "bg-sidebar-accent text-sidebar-foreground"
-                                        : "text-sidebar-foreground/70 hover:bg-sidebar-accent"
+                                    ? "bg-sidebar-accent text-sidebar-foreground"
+                                    : "text-sidebar-foreground/70 hover:bg-sidebar-accent"
                                     }`}
                             >
                                 <span className="flex-1 truncate">ElevenAgents</span>
@@ -241,8 +238,8 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
                                 type="button"
                                 onClick={() => handleWorkspaceSelect("elevenAPI")}
                                 className={`flex w-full items-center gap-2 px-2 py-1.5 text-left text-[13px] rounded-[10px] ${platform === "elevenAPI"
-                                        ? "bg-sidebar-accent text-sidebar-foreground"
-                                        : "text-sidebar-foreground/70 hover:bg-sidebar-accent"
+                                    ? "bg-sidebar-accent text-sidebar-foreground"
+                                    : "text-sidebar-foreground/70 hover:bg-sidebar-accent"
                                     }`}
                             >
                                 <span className="flex-1 truncate">ElevenAPI</span>
@@ -258,9 +255,9 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
                             {currentNav.main.map((item) => (
                                 <div key={item.title} className="relative">
                                     <NavItem {...item} />
-                                    {/* Inline + button only for items that declare badge */}
-                                    {"badge" in item && (item as { badge?: string }).badge && (
-                                        <button className="absolute right-1 top-[5px] bg-sidebar-accent border border-sidebar-border rounded-[6px] p-[3px] h-[22px] w-[22px] flex items-center justify-center text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent transition-colors group-data-[collapsible=icon]:hidden">
+                                    {/* Voices: inline + button */}
+                                    {item.badge && (
+                                        <button className="absolute right-1 top-[5px] bg-[#111111] border border-[#2a2a2a] rounded-[6px] p-[3px] h-[22px] w-[22px] flex items-center justify-center text-[#5b5b64] hover:text-white hover:bg-[#1a1a1a] transition-colors group-data-[collapsible=icon]:hidden">
                                             <Plus className="h-3 w-3" />
                                         </button>
                                     )}
@@ -272,7 +269,7 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
 
                 {/* ── Playground Section ──────────────────────────── */}
                 <SidebarGroup className="pt-5 pb-0 px-3">
-                    <SidebarGroupLabel className="group-data-[collapsible=icon]:hidden text-[14px] font-medium text-sidebar-foreground/50 h-5 px-0 mb-1.5">
+                    <SidebarGroupLabel className="group-data-[collapsible=icon]:hidden text-[14px] font-medium text-[#787881] h-5 px-0 mb-1.5">
                         Playground
                     </SidebarGroupLabel>
                     <SidebarGroupContent>
@@ -286,7 +283,7 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
 
                 {/* ── Products Section ────────────────────────────── */}
                 <SidebarGroup className="pt-5 pb-0 px-3">
-                    <SidebarGroupLabel className="group-data-[collapsible=icon]:hidden text-[14px] font-medium text-sidebar-foreground/50 h-5 px-0 mb-1.5">
+                    <SidebarGroupLabel className="group-data-[collapsible=icon]:hidden text-[14px] font-medium text-[#787881] h-5 px-0 mb-1.5">
                         Products
                     </SidebarGroupLabel>
                     <SidebarGroupContent>
@@ -309,14 +306,14 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
             </SidebarContent>
 
             {/* ── Footer: Upgrade CTA ─────────────────────────────── */}
-            <SidebarFooter className="bg-sidebar px-3 py-3">
+            <SidebarFooter className="bg-[#0a0a0a] border-t border-[#1a1a1a] px-3 py-3">
                 <div className="group-data-[collapsible=icon]:hidden">
                     <a
                         href="#"
                         className="
                             flex items-center gap-2 px-2 py-1.5 w-full rounded-lg
                             relative overflow-hidden
-                            border border-sidebar-border
+                            border border-[#2a2a2a]
                             bg-gradient-to-r from-[#a855f7]/10 via-transparent to-[#22c55e]/10
                             hover:from-[#a855f7]/20 hover:to-[#22c55e]/20
                             transition-all duration-300
@@ -324,16 +321,16 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
                         "
                     >
                         <div className="flex items-center justify-center h-5 w-5 shrink-0">
-                            <Zap className="h-[18px] w-[18px] text-[#a855f7] group-hover/upgrade:text-[#b97cf7] transition-colors" />
+                            <Zap className="h-[18px] w-[18px] text-primary group-hover/upgrade:text-primary transition-colors" />
                         </div>
-                        <span className="text-[14px] font-medium text-sidebar-foreground/70 group-hover/upgrade:text-sidebar-foreground transition-colors">
+                        <span className="text-[14px] font-medium text-[#e5e5e8] group-hover/upgrade:text-white transition-colors">
                             Upgrade
                         </span>
                     </a>
                 </div>
                 {/* Collapsed icon-only state */}
                 <div className="hidden group-data-[collapsible=icon]:flex items-center justify-center">
-                    <button className="h-8 w-8 flex items-center justify-center rounded-lg border border-sidebar-border bg-[#a855f7]/10 hover:bg-[#a855f7]/20 transition-colors">
+                    <button className="h-8 w-8 flex items-center justify-center rounded-lg border border-[#2a2a2a] bg-[#a855f7]/10 hover:bg-[#a855f7]/20 transition-colors">
                         <Zap className="h-4 w-4 text-[#a855f7]" />
                     </button>
                 </div>
