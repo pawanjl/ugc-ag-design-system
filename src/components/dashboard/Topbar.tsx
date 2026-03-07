@@ -29,6 +29,13 @@ import {
     DropdownMenuSubTrigger,
     DropdownMenuSubContent,
 } from "@/components/ui/dropdown-menu"
+import { useTheme } from "next-themes"
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 export function Topbar() {
     const [searchFocused, setSearchFocused] = useState(false)
