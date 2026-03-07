@@ -8,6 +8,17 @@ import { SlideUp } from "@/components/animations/slide-up"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button/button"
 import { Divider } from "@/components/ds/Divider"
+import { 
+    Modal, 
+    ModalContent, 
+    ModalDescription, 
+    ModalFooter, 
+    ModalHeader, 
+    ModalTitle, 
+    ModalTrigger,
+    ModalClose,
+} from "@/components/ds/Modal"
+import { useState } from "react"
 
 export default function DashboardPage() {
     const metrics = [
@@ -112,6 +123,35 @@ export default function DashboardPage() {
                                     >
                                         Run Task
                                     </Button>
+
+                                    <Modal>
+                                        <ModalTrigger asChild>
+                                            <Button 
+                                                variant="outline" 
+                                                className="rounded-xl border-border/60 hover:bg-accent"
+                                                leftIcon={<Sparkles className="h-4 w-4" />}
+                                            >
+                                                Open Modal
+                                            </Button>
+                                        </ModalTrigger>
+                                        <ModalContent>
+                                            <ModalHeader>
+                                                <ModalTitle>Generic Modal Component</ModalTitle>
+                                                <ModalDescription>
+                                                    This modal follows your premium design system with 3xl rounded corners and semantic theme colors.
+                                                </ModalDescription>
+                                            </ModalHeader>
+                                            <div className="py-4 text-sm text-foreground/80">
+                                                You can place any content here. It automatically supports light and dark themes using your CSS variables.
+                                            </div>
+                                            <ModalFooter>
+                                                <ModalClose asChild>
+                                                    <Button variant="outline" className="rounded-full">Close</Button>
+                                                </ModalClose>
+                                                <Button className="rounded-full">Primary Action</Button>
+                                            </ModalFooter>
+                                        </ModalContent>
+                                    </Modal>
                                 </div>
                             </div>
                         </div>
