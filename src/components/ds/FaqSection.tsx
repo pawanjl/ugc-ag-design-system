@@ -119,16 +119,16 @@ export function FaqSection({
             <div className="w-full max-w-[800px] flex flex-col gap-4">
                 {/* ── Header row ── */}
                 <div className="flex items-center justify-between mb-2">
-                    <h2 className="text-[22.3px] font-medium leading-[30px] tracking-[-0.15px] text-[rgba(229,229,232,0.89)]">
+                    <h2 className="text-[22.3px] font-medium leading-[30px] tracking-[-0.15px] text-foreground">
                         {title}
                     </h2>
                     <button
                         onClick={onAsk}
                         className={cn(
                             "inline-flex items-center gap-1.5 h-8 px-[11px] rounded-[8px]",
-                            "border border-[rgba(229,229,232,0.1)] bg-[rgba(229,229,232,0.04)]",
-                            "text-[13px] font-medium text-[rgba(229,229,232,0.7)] leading-5",
-                            "hover:bg-[rgba(229,229,232,0.08)] hover:text-[rgba(229,229,232,0.9)]",
+                            "border border-border bg-secondary/30",
+                            "text-[13px] font-medium text-muted-foreground leading-5",
+                            "hover:bg-secondary/60 hover:text-foreground",
                             "transition-colors"
                         )}
                     >

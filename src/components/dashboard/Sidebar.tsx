@@ -51,6 +51,7 @@ import { usePathname } from "next/navigation"
 
 const mainNavItems = [
     { title: "Home", url: "/dashboard", icon: Home },
+    { title: "Forms Showcase", url: "/dashboard/forms", icon: FileText, tag: "New" },
     { title: "Voices", url: "#", icon: Mic, badge: "+" },
     { title: "Files", url: "#", icon: FileText },
     { title: "Billing", url: "/dashboard/billing", icon: CreditCard },

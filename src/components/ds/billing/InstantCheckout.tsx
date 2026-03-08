@@ -37,7 +37,7 @@ export function InstantCheckout() {
                     </div>
                 </div>
 
-                <Button className="w-full h-12 rounded-[14px] gap-3 font-bold text-base bg-primary hover:scale-[0.98] transition-transform shadow-lg shadow-primary/10">
+                <Button className="w-full h-12 rounded-[14px] gap-3 font-bold text-base bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground hover:scale-[0.98] transition-all shadow-lg shadow-primary/10">
                     <CreditCard className="w-5 h-5" />
                     Pay Now
                 </Button>
