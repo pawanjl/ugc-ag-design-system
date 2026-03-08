@@ -37,7 +37,16 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
+    SidebarMenuBadge,
+    SidebarMenuSub,
+    SidebarMenuSubItem,
+    SidebarMenuSubButton,
 } from "@/components/ui/sidebar"
+import {
+    Collapsible,
+    CollapsibleContent,
+    CollapsibleTrigger,
+} from "@/components/ui/collapsible"
 import {
     Tooltip,
     TooltipContent,
@@ -51,9 +60,20 @@ import { usePathname } from "next/navigation"
 
 const mainNavItems = [
     { title: "Home", url: "/dashboard", icon: Home },
-    { title: "Forms Showcase", url: "/dashboard/forms", icon: FileText, tag: "New" },
-    { title: "Voices", url: "#", icon: Mic, badge: "+" },
-    { title: "Files", url: "#", icon: FileText },
+    { title: "Layouts Showcase", url: "/dashboard/layouts", icon: Layers, tag: "New" },
+    { title: "Forms Showcase", url: "/dashboard/forms", icon: FileText },
+    { 
+        title: "Voices", 
+        url: "#", 
+        icon: Mic, 
+        badge: "+",
+        subItems: [
+            { title: "Voice Library", url: "#" },
+            { title: "Voice Cloning", url: "#" },
+            { title: "Voice Design", url: "#" },
+        ]
+    },
+    { title: "Files", url: "#", icon: FileText, badge: "3" },
     { title: "Billing", url: "/dashboard/billing", icon: CreditCard },
 ]
 
@@ -78,6 +98,11 @@ const productsItems = [
 
 // ── Sidebar Nav Item ─────────────────────────────────────────────────────────
 
+interface NavSubItemProps {
+    title: string;
+    url: string;
+}
+
 interface NavItemProps {
     title: string
     url: string
@@ -85,11 +110,58 @@ interface NavItemProps {
     isActive?: boolean
     badge?: string
     tag?: string
+    subItems?: NavSubItemProps[]
 }
 
-function NavItem({ title, url, icon: Icon, isActive: propIsActive, tag }: NavItemProps) {
+function NavItem({ title, url, icon: Icon, isActive: propIsActive, tag, badge, subItems }: NavItemProps) {
     const pathname = usePathname()
-    const isActive = propIsActive ?? (url !== "#" && pathname === url)
+    // A parent is active if it or any of its subItems match the pathname
+    const isSubActive = subItems?.some(item => pathname === item.url || pathname.startsWith(item.url + '/'))
+    const isActive = (propIsActive ?? (url !== "#" && pathname === url)) || isSubActive
+
+    if (subItems && subItems.length > 0) {
+        return (
+            <Collapsible asChild defaultOpen={isActive} className="group/collapsible">
+                <SidebarMenuItem>
+                    <CollapsibleTrigger asChild>
+                        <SidebarMenuButton
+                            tooltip={title}
+                            className={`
+                                group/item h-8 rounded-[10px] px-2 gap-2
+                                transition-all duration-200 ease-in-out w-full
+                                ${isActive
+                                    ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
+                                    : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                                }
+                            `}
+                        >
+                            <Icon className="h-5 w-5 shrink-0" />
+                            <span className="flex-1 text-[14px] font-medium leading-5 truncate text-left">
+                                {title}
+                            </span>
+                            <ChevronDown className="ml-auto h-4 w-4 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-180" />
+                        </SidebarMenuButton>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                        <SidebarMenuSub>
+                            {subItems.map((subItem) => (
+                                <SidebarMenuSubItem key={subItem.title}>
+                                    <SidebarMenuSubButton
+                                        asChild
+                                        isActive={pathname === subItem.url}
+                                    >
+                                        <a href={subItem.url}>
+                                            <span>{subItem.title}</span>
+                                        </a>
+                                    </SidebarMenuSubButton>
+                                </SidebarMenuSubItem>
+                            ))}
+                        </SidebarMenuSub>
+                    </CollapsibleContent>
+                </SidebarMenuItem>
+            </Collapsible>
+        )
+    }
 
     return (
         <SidebarMenuItem>
@@ -98,7 +170,7 @@ function NavItem({ title, url, icon: Icon, isActive: propIsActive, tag }: NavIte
                 isActive={isActive}
                 tooltip={title}
                 className={`
-                    group/item h-8 rounded-[10px] px-2 gap-2
+                    group/item h-8 rounded-[10px] px-2 gap-2 relative
                     transition-all duration-200 ease-in-out
                     ${isActive
                         ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
@@ -112,12 +184,17 @@ function NavItem({ title, url, icon: Icon, isActive: propIsActive, tag }: NavIte
                         {title}
                     </span>
                     {tag && (
-                        <span className="ml-auto text-[12px] font-medium leading-4 tracking-[0.03px] px-[11px] py-px rounded-full bg-sidebar-accent border border-sidebar-border text-sidebar-foreground whitespace-nowrap">
+                        <span className="ml-auto mr-4 text-[12px] font-medium leading-4 tracking-[0.03px] px-[11px] py-px rounded-full bg-sidebar-accent border border-sidebar-border text-sidebar-foreground whitespace-nowrap">
                             {tag}
                         </span>
                     )}
                 </a>
             </SidebarMenuButton>
+            {badge && (
+                <SidebarMenuBadge className={badge === '+' ? "bg-sidebar-accent border border-sidebar-border hover:bg-sidebar-accent/80 transition-colors rounded-[6px] w-[22px] h-[22px] p-[3px] text-sidebar-foreground/50 ml-auto mr-1" : "ml-auto"}>
+                    {badge === '+' ? <Plus className="h-3 w-3" /> : badge}
+                </SidebarMenuBadge>
+            )}
         </SidebarMenuItem>
     )
 }

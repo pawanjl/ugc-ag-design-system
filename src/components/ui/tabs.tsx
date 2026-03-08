@@ -11,6 +11,7 @@ const TabsContext = React.createContext<{
   activeTab: string | undefined
   setActiveTab: (value: string) => void
   variant?: string | null
+  layoutId?: string
 }>({
   activeTab: undefined,
   setActiveTab: () => {},
@@ -24,6 +25,7 @@ const Tabs = React.forwardRef<
   }
 >(({ defaultValue, value, onValueChange, variant = "default", ...props }, ref) => {
   const [activeTab, setActiveTabInternal] = React.useState(value || defaultValue)
+  const id = React.useId()
 
   React.useEffect(() => {
     if (value !== undefined) {
@@ -42,7 +44,7 @@ const Tabs = React.forwardRef<
   )
 
   return (
-    <TabsContext.Provider value={{ activeTab: activeTab as string, setActiveTab, variant }}>
+    <TabsContext.Provider value={{ activeTab: activeTab as string, setActiveTab, variant, layoutId: id }}>
       <TabsPrimitive.Root
         ref={ref}
         value={value}
@@ -97,10 +99,11 @@ const TabsTrigger = React.forwardRef<
     indicatorClassName?: string
     showIndicator?: boolean
   }
->(({ className, children, value, layoutId = "active-tab-indicator", indicatorClassName, showIndicator = true, ...props }, ref) => {
-  const { activeTab, variant } = React.useContext(TabsContext)
+>(({ className, children, value, layoutId, indicatorClassName, showIndicator = true, ...props }, ref) => {
+  const { activeTab, variant, layoutId: contextLayoutId } = React.useContext(TabsContext)
   const isActive = activeTab === value
   const isUnderline = variant === "underline"
+  const finalLayoutId = layoutId || (contextLayoutId ? `${contextLayoutId}-indicator` : "active-tab-indicator")
 
   return (
     <TabsPrimitive.Trigger
@@ -118,7 +121,7 @@ const TabsTrigger = React.forwardRef<
           <span className="relative z-10">{children}</span>
           {showIndicator && isActive && (
             <motion.div
-              layoutId={layoutId}
+              layoutId={finalLayoutId}
               className={cn("absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full", indicatorClassName)}
               transition={{
                 type: "spring",
@@ -133,7 +136,7 @@ const TabsTrigger = React.forwardRef<
           <span className="relative z-10">{children}</span>
           {showIndicator && isActive && (
             <motion.div
-              layoutId={layoutId}
+              layoutId={finalLayoutId}
               className={cn("absolute inset-0 z-0 rounded-md bg-background shadow-sm", indicatorClassName)}
               transition={{
                 type: "spring",

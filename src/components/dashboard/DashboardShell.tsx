@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button/button"
 import { SendIcon } from "lucide-react"
 import { FaqSection } from "@/components/ds/FaqSection"
 import { Divider } from "@/components/ds/Divider"
+import { MobileBottomNav } from "@/components/navigation/MobileBottomNav"
 
 export function DashboardShell({
     children,
@@ -83,6 +84,7 @@ export function DashboardShell({
                     </div>
                 </DockPanel>
             </DockLayout>
+            <MobileBottomNav />
         </div>
     )
 }
