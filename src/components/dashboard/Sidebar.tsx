@@ -21,7 +21,6 @@ import {
     Zap,
     ChevronDown,
     Plus,
-    Shield,
     CreditCard,
     Key,
     Webhook,
@@ -53,12 +52,6 @@ import {
     CollapsibleContent,
     CollapsibleTrigger,
 } from "@/components/ui/collapsible"
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from "@/components/ui/tooltip"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
 import { usePlatform, type Platform } from "@/components/dashboard/platform-context"
@@ -154,7 +147,7 @@ const apiNav = {
             label: "Monitor",
             items: [
                 { title: "Analytics", url: "/dashboard/analytics", icon: BarChart3 },
-                { title: "Request Log", url: "#", icon: History },
+            { title: "Request Log", url: "/dashboard/request-log", icon: History },
             ]
         }
     ]
@@ -183,7 +176,7 @@ const agentsNav = {
             label: "Monitor",
             items: [
                 { title: "Analytics", url: "/dashboard/analytics", icon: BarChart3 },
-                { title: "Request Log", url: "#", icon: History },
+            { title: "Request Log", url: "/dashboard/request-log", icon: History },
             ]
         },
         {
@@ -195,7 +188,27 @@ const agentsNav = {
     ]
 }
 
-const platformNavConfig: Record<Platform, any> = {
+interface PlatformNavSectionItem {
+    title: string
+    url: string
+    icon: React.ElementType
+    badge?: string
+    tag?: string
+    isExternal?: boolean
+    subItems?: NavSubItemProps[]
+}
+
+interface PlatformNavSection {
+    label: string
+    items: PlatformNavSectionItem[]
+}
+
+interface PlatformNavConfig {
+    main: PlatformNavSectionItem[]
+    sections: PlatformNavSection[]
+}
+
+const platformNavConfig: Record<Platform, PlatformNavConfig> = {
     elevenCreative: creativeNav,
     elevenAgents: agentsNav,
     elevenAPI: apiNav,
@@ -356,7 +369,7 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
                     >
                         {/* Workspace avatar */}
                         <div className="flex h-8 w-8 shrink-0 items-center justify-center">
-                            <div className="h-5 w-5 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-[8px] font-bold text-white">
+                            <div className="h-5 w-5 rounded-full bg-linear-to-br from-primary to-secondary flex items-center justify-center text-[8px] font-bold text-white">
                                 {workspaceLabel[0]}
                             </div>
                         </div>
@@ -412,7 +425,7 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
                 <SidebarGroup className="pt-3 pb-0 px-3">
                     <SidebarGroupContent>
                         <SidebarMenu className="gap-1">
-                            {currentNav.main.map((item: any) => (
+                            {currentNav.main.map((item) => (
                                 <div key={item.title} className="relative">
                                     <NavItem {...item} />
                                     {/* Voices: inline + button */}
@@ -428,14 +441,14 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
                 </SidebarGroup>
 
                 {/* ── Dynamic Sections ──────────────────────────── */}
-                {currentNav.sections?.map((section: any) => (
+                {currentNav.sections?.map((section) => (
                     <SidebarGroup key={section.label} className="pt-5 pb-0 px-3">
                         <SidebarGroupLabel className="group-data-[collapsible=icon]:hidden text-[14px] font-medium text-muted-foreground h-5 px-0 mb-1.5">
                             {section.label}
                         </SidebarGroupLabel>
                         <SidebarGroupContent>
                             <SidebarMenu className="gap-1">
-                                {section.items.map((item: any) => (
+                                {section.items.map((item) => (
                                     <div key={item.title} className="relative">
                                         <NavItem {...item} />
                                         {item.badge === '+' && (
@@ -469,7 +482,7 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
                             flex items-center gap-2 px-2 py-1.5 w-full rounded-lg
                             relative overflow-hidden
                             border border-[#2a2a2a]
-                            bg-gradient-to-r from-[#a855f7]/10 via-transparent to-[#22c55e]/10
+                            bg-linear-to-r from-[#a855f7]/10 via-transparent to-[#22c55e]/10
                             hover:from-[#a855f7]/20 hover:to-[#22c55e]/20
                             transition-all duration-300
                             group/upgrade

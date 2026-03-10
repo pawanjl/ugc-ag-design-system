@@ -64,7 +64,7 @@ export function DataTable<T extends Record<string, unknown>>({
     return (
         <div
             className={cn(
-                "w-full border border-border/10 rounded-xl overflow-hidden bg-card/30 backdrop-blur-sm shadow-sm",
+                "w-full border border-border rounded-lg overflow-hidden bg-background",
                 className
             )}
             style={{ maxHeight }}
@@ -72,7 +72,7 @@ export function DataTable<T extends Record<string, unknown>>({
             <table className="w-full border-collapse text-[12px]">
                 {/* Sticky header */}
                 <thead>
-                    <tr className="sticky top-0 z-10 bg-muted/30 backdrop-blur-md border-b border-border/10">
+                    <tr className="sticky top-0 z-10 bg-background border-b border-border/40">
                         {columns.map((col) => (
                             <th
                                 key={col.key}
@@ -108,7 +108,7 @@ export function DataTable<T extends Record<string, unknown>>({
                                 key={rowIdx}
                                 onClick={() => onRowClick?.(row)}
                                 className={cn(
-                                    "border-b border-border/5 last:border-b-0 transition-colors group/row",
+                                    "border-b border-border/30 last:border-b-0 transition-colors group/row",
                                     onRowClick && "cursor-pointer hover:bg-primary/[0.02]"
                                 )}
                             >
