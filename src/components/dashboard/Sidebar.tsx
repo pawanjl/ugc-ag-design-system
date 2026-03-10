@@ -22,6 +22,13 @@ import {
     ChevronDown,
     Plus,
     Shield,
+    CreditCard,
+    Key,
+    Webhook,
+    BarChart3,
+    History,
+    ArrowUpRight,
+    Bot,
 } from "lucide-react"
 
 import {
@@ -36,79 +43,170 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
+    SidebarMenuBadge,
+    SidebarMenuSub,
+    SidebarMenuSubItem,
+    SidebarMenuSubButton,
 } from "@/components/ui/sidebar"
+import {
+    Collapsible,
+    CollapsibleContent,
+    CollapsibleTrigger,
+} from "@/components/ui/collapsible"
 import {
     Tooltip,
     TooltipContent,
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { usePlatform } from "@/components/dashboard/platform-context"
+import { usePathname } from "next/navigation"
+import Link from "next/link"
+import { usePlatform, type Platform } from "@/components/dashboard/platform-context"
 
-// ── Nav Data per platform ────────────────────────────────────────────────────
+// ── Platform Specific Nav Data ──────────────────────────────────────────────
 
-const platformNavConfig = {
-    elevenCreative: {
-        main: [
-            { title: "Home", url: "/dashboard", icon: Home, isActive: true },
-            { title: "Voices", url: "#", icon: Mic, badge: "+" },
-            { title: "Files", url: "#", icon: FileText },
-        ],
-        playground: [
-            { title: "Text to Speech", url: "#", icon: Type },
-            { title: "Voice Changer", url: "#", icon: Radio },
-            { title: "Voice Isolator", url: "#", icon: Waves },
-            { title: "Sound Effects", url: "#", icon: AudioWaveform },
-            { title: "Music", url: "#", icon: Music },
-            { title: "Image & Video", url: "#", icon: Image },
-            { title: "Templates", url: "#", icon: BookTemplate },
-        ],
-        products: [
-            { title: "Studio", url: "#", icon: Layers },
-            { title: "Audiobooks", url: "#", icon: BookOpen, tag: "New" },
-            { title: "Dubbing", url: "#", icon: Globe2 },
-            { title: "Speech to Text", url: "#", icon: FileAudio },
-            { title: "Audio Native", url: "#", icon: Clapperboard },
-            { title: "Productions", url: "#", icon: Mic },
-        ],
-    },
-    elevenAgents: {
-        main: [
-            { title: "Agents Home", url: "/dashboard/agents", icon: Home, isActive: true },
-            { title: "Agent Builder", url: "#", icon: Layers },
-            { title: "Conversations", url: "#", icon: Mic },
-        ],
-        playground: [
-            { title: "Agent Playground", url: "#", icon: Type },
-            { title: "Knowledge Bases", url: "#", icon: BookOpen },
-            { title: "Routing & Orchestration", url: "#", icon: Waves },
-        ],
-        products: [
-            { title: "Agent Hub", url: "#", icon: Globe2 },
-            { title: "Analytics", url: "#", icon: Clapperboard },
-            { title: "Security", url: "#", icon: Shield },
-        ],
-    },
-    elevenAPI: {
-        main: [
-            { title: "API Overview", url: "/dashboard/api", icon: Home, isActive: true },
-            { title: "API Playground", url: "#", icon: Code2 },
-            { title: "Requests & Logs", url: "#", icon: FileText },
-        ],
-        playground: [
-            { title: "REST Examples", url: "#", icon: Type },
-            { title: "SDKs & Clients", url: "#", icon: Layers },
-            { title: "Webhooks", url: "#", icon: Radio },
-        ],
-        products: [
-            { title: "API Keys", url: "#", icon: Shield },
-            { title: "Rate Limits", url: "#", icon: Zap },
-            { title: "Status & Incidents", url: "#", icon: Globe2 },
-        ],
-    },
-} as const
+const creativeNav = {
+    main: [
+        { title: "Home", url: "/dashboard", icon: Home },
+        { title: "Layouts Showcase", url: "/dashboard/layouts", icon: Layers, tag: "New" },
+        { title: "Forms Showcase", url: "/dashboard/forms", icon: FileText },
+    ],
+    sections: [
+        {
+            label: "Voices", items: [
+                {
+                    title: "Voices",
+                    url: "#",
+                    icon: Mic,
+                    badge: "+",
+                    subItems: [
+                        { title: "Voice Library", url: "#" },
+                        { title: "Voice Cloning", url: "#" },
+                        { title: "Voice Design", url: "#" },
+                    ]
+                }
+            ]
+        },
+        {
+            label: "Playground",
+            items: [
+                { title: "Text to Speech", url: "#", icon: Type },
+                { title: "Voice Changer", url: "#", icon: Radio },
+                { title: "Voice Isolator", url: "#", icon: Waves },
+                { title: "Sound Effects", url: "#", icon: AudioWaveform },
+                { title: "Music", url: "#", icon: Music },
+                { title: "Image & Video", url: "#", icon: Image },
+                { title: "Templates", url: "#", icon: BookTemplate },
+            ]
+        },
+        {
+            label: "Products",
+            items: [
+                { title: "Studio", url: "#", icon: Layers },
+                { title: "Audiobooks", url: "#", icon: BookOpen, tag: "New" },
+                { title: "Dubbing", url: "#", icon: Globe2 },
+                { title: "Speech to Text", url: "#", icon: FileAudio },
+                { title: "Audio Native", url: "#", icon: Clapperboard },
+                { title: "Productions", url: "#", icon: Mic },
+            ]
+        },
+        {
+            label: "Files", items: [
+                { title: "Files", url: "#", icon: FileText, badge: "3" }
+            ]
+        },
+        {
+            label: "Monitor",
+            items: [
+                { title: "Analytics", url: "/dashboard/analytics", icon: BarChart3 },
+            ]
+        },
+        {
+            label: "Settings", items: [
+                { title: "Billing", url: "/dashboard/billing", icon: CreditCard }
+            ]
+        }
+    ]
+}
+
+const apiNav = {
+    main: [
+        { title: "Home", url: "/dashboard", icon: Home },
+    ],
+    sections: [
+        {
+            label: "Build",
+            items: [
+                { title: "Voices", url: "#", icon: Mic, badge: "+" },
+                { title: "API Playground", url: "#", icon: Zap, isExternal: true },
+                { title: "API Docs", url: "#", icon: FileText, isExternal: true },
+                { title: "Agents", url: "#", icon: Bot, isExternal: true },
+            ]
+        },
+        {
+            label: "Configure",
+            items: [
+                { title: "API Keys", url: "#", icon: Key },
+                { title: "Webhooks", url: "#", icon: Webhook },
+            ]
+        },
+        {
+            label: "Monitor",
+            items: [
+                { title: "Analytics", url: "/dashboard/analytics", icon: BarChart3 },
+                { title: "Request Log", url: "#", icon: History },
+            ]
+        }
+    ]
+}
+
+const agentsNav = {
+    main: [
+        { title: "Home", url: "/dashboard", icon: Home },
+    ],
+    sections: [
+        {
+            label: "Workspaces",
+            items: [
+                { title: "My Agents", url: "#", icon: Bot },
+                { title: "Templates", url: "#", icon: BookTemplate },
+            ]
+        },
+        {
+            label: "Voices",
+            items: [
+                { title: "Voice Library", url: "#", icon: Mic },
+                { title: "Voice Cloning", url: "#", icon: Layers },
+            ]
+        },
+        {
+            label: "Monitor",
+            items: [
+                { title: "Analytics", url: "/dashboard/analytics", icon: BarChart3 },
+                { title: "Request Log", url: "#", icon: History },
+            ]
+        },
+        {
+            label: "Settings",
+            items: [
+                { title: "Billing", url: "/dashboard/billing", icon: CreditCard }
+            ]
+        }
+    ]
+}
+
+const platformNavConfig: Record<Platform, any> = {
+    elevenCreative: creativeNav,
+    elevenAgents: agentsNav,
+    elevenAPI: apiNav,
+}
 
 // ── Sidebar Nav Item ─────────────────────────────────────────────────────────
+
+interface NavSubItemProps {
+    title: string;
+    url: string;
+}
 
 interface NavItemProps {
     title: string
@@ -117,9 +215,60 @@ interface NavItemProps {
     isActive?: boolean
     badge?: string
     tag?: string
+    isExternal?: boolean
+    subItems?: NavSubItemProps[]
 }
 
-function NavItem({ title, url, icon: Icon, isActive, tag }: NavItemProps) {
+function NavItem({ title, url, icon: Icon, isActive: propIsActive, tag, badge, isExternal, subItems }: NavItemProps) {
+    const pathname = usePathname()
+    // A parent is active if it or any of its subItems match the pathname
+    const isSubActive = subItems?.some(item => pathname === item.url || pathname.startsWith(item.url + '/'))
+    const isActive = (propIsActive ?? (url !== "#" && pathname === url)) || isSubActive
+
+    if (subItems && subItems.length > 0) {
+        return (
+            <Collapsible asChild defaultOpen={isActive} className="group/collapsible">
+                <SidebarMenuItem>
+                    <CollapsibleTrigger asChild>
+                        <SidebarMenuButton
+                            tooltip={title}
+                            className={`
+                                group/item h-8 rounded-[10px] px-2 gap-2
+                                transition-all duration-200 ease-in-out w-full
+                                ${isActive
+                                    ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
+                                    : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                                }
+                            `}
+                        >
+                            <Icon className="h-5 w-5 shrink-0" />
+                            <span className="flex-1 text-[14px] font-medium leading-5 truncate text-left">
+                                {title}
+                            </span>
+                            <ChevronDown className="ml-auto h-4 w-4 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-180" />
+                        </SidebarMenuButton>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                        <SidebarMenuSub>
+                            {subItems.map((subItem) => (
+                                <SidebarMenuSubItem key={subItem.title}>
+                                    <SidebarMenuSubButton
+                                        asChild
+                                        isActive={pathname === subItem.url}
+                                    >
+                                        <Link href={subItem.url}>
+                                            <span>{subItem.title}</span>
+                                        </Link>
+                                    </SidebarMenuSubButton>
+                                </SidebarMenuSubItem>
+                            ))}
+                        </SidebarMenuSub>
+                    </CollapsibleContent>
+                </SidebarMenuItem>
+            </Collapsible>
+        )
+    }
+
     return (
         <SidebarMenuItem>
             <SidebarMenuButton
@@ -127,26 +276,34 @@ function NavItem({ title, url, icon: Icon, isActive, tag }: NavItemProps) {
                 isActive={isActive}
                 tooltip={title}
                 className={`
-                    group/item h-8 rounded-[10px] px-2 gap-2
+                    group/item h-8 rounded-[10px] px-2 gap-2 relative
                     transition-all duration-200 ease-in-out
                     ${isActive
-                        ? "bg-[#1a1a1a] text-white font-medium"
-                        : "text-[#5b5b64] hover:bg-[#1a1a1a] hover:text-[#e5e5e8]"
+                        ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
+                        : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
                     }
                 `}
             >
-                <a href={url} className="flex items-center gap-2 w-full">
+                <Link href={url} className="flex items-center gap-2 w-full">
                     <Icon className="h-5 w-5 shrink-0" />
                     <span className="flex-1 text-[14px] font-medium leading-5 truncate">
                         {title}
                     </span>
+                    {isExternal && (
+                        <ArrowUpRight className="ml-auto h-3.5 w-3.5 text-muted-foreground/50 group-hover/item:text-foreground transition-colors" />
+                    )}
                     {tag && (
-                        <span className="ml-auto text-[12px] font-medium leading-4 tracking-[0.03px] px-[11px] py-px rounded-full bg-sidebar-accent border border-sidebar-border text-sidebar-foreground whitespace-nowrap">
+                        <span className="ml-auto mr-4 text-[12px] font-medium leading-4 tracking-[0.03px] px-[11px] py-px rounded-full bg-sidebar-accent border border-sidebar-border text-sidebar-foreground whitespace-nowrap">
                             {tag}
                         </span>
                     )}
-                </a>
+                </Link>
             </SidebarMenuButton>
+            {badge && (
+                <SidebarMenuBadge className={badge === '+' ? "bg-sidebar-accent border border-sidebar-border hover:bg-sidebar-accent/80 transition-colors rounded-[6px] w-[22px] h-[22px] p-[3px] text-sidebar-foreground/50 ml-auto mr-1" : "ml-auto"}>
+                    {badge === '+' ? <Plus className="h-3 w-3" /> : badge}
+                </SidebarMenuBadge>
+            )}
         </SidebarMenuItem>
     )
 }
@@ -192,19 +349,22 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
 
             <SidebarContent className="bg-sidebar overflow-x-hidden">
                 {/* ── Platform Switcher ───────────────────────────── */}
-                <div className="px-3 pt-2 group-data-[collapsible=icon]:hidden">
-                    <button className="w-full flex items-center gap-2 px-2 py-1 rounded-[10px] bg-[#111111] border border-[#1f1f1f] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.3)] hover:bg-[#161616] transition-colors duration-200">
+                <div className="px-3 pt-2 group-data-[collapsible=icon]:hidden relative">
+                    <button
+                        onClick={toggleWorkspaceMenu}
+                        className="w-full flex items-center gap-2 px-2 py-1 rounded-[10px] bg-sidebar-accent/50 border border-sidebar-border shadow-sm hover:bg-sidebar-accent transition-colors duration-200"
+                    >
                         {/* Workspace avatar */}
                         <div className="flex h-8 w-8 shrink-0 items-center justify-center">
                             <div className="h-5 w-5 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-[8px] font-bold text-white">
-                                E
+                                {workspaceLabel[0]}
                             </div>
                         </div>
                         <div className="flex flex-1 items-center justify-between min-w-0">
-                            <span className="text-[14px] font-medium text-white truncate max-w-[130px]">
-                                ElevenCreative
+                            <span className="text-[14px] font-medium text-sidebar-foreground truncate max-w-[130px]">
+                                {workspaceLabel}
                             </span>
-                            <ChevronDown className="h-4 w-4 text-[#5b5b64] shrink-0 ml-2" />
+                            <ChevronDown className={`h-4 w-4 text-muted-foreground shrink-0 ml-2 transition-transform duration-200 ${isWorkspaceMenuOpen ? 'rotate-180' : ''}`} />
                         </div>
                     </button>
 
@@ -252,12 +412,12 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
                 <SidebarGroup className="pt-3 pb-0 px-3">
                     <SidebarGroupContent>
                         <SidebarMenu className="gap-1">
-                            {currentNav.main.map((item) => (
+                            {currentNav.main.map((item: any) => (
                                 <div key={item.title} className="relative">
                                     <NavItem {...item} />
                                     {/* Voices: inline + button */}
-                                    {item.badge && (
-                                        <button className="absolute right-1 top-[5px] bg-[#111111] border border-[#2a2a2a] rounded-[6px] p-[3px] h-[22px] w-[22px] flex items-center justify-center text-[#5b5b64] hover:text-white hover:bg-[#1a1a1a] transition-colors group-data-[collapsible=icon]:hidden">
+                                    {item.badge === '+' && (
+                                        <button className="absolute right-1 top-[5px] bg-sidebar-accent border border-sidebar-border rounded-[6px] p-[3px] h-[22px] w-[22px] flex items-center justify-center text-sidebar-foreground/50 hover:text-sidebar-foreground hover:bg-sidebar-accent/80 transition-colors group-data-[collapsible=icon]:hidden">
                                             <Plus className="h-3 w-3" />
                                         </button>
                                     )}
@@ -267,33 +427,28 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
                     </SidebarGroupContent>
                 </SidebarGroup>
 
-                {/* ── Playground Section ──────────────────────────── */}
-                <SidebarGroup className="pt-5 pb-0 px-3">
-                    <SidebarGroupLabel className="group-data-[collapsible=icon]:hidden text-[14px] font-medium text-[#787881] h-5 px-0 mb-1.5">
-                        Playground
-                    </SidebarGroupLabel>
-                    <SidebarGroupContent>
-                        <SidebarMenu className="gap-1">
-                            {currentNav.playground.map((item) => (
-                                <NavItem key={item.title} {...item} />
-                            ))}
-                        </SidebarMenu>
-                    </SidebarGroupContent>
-                </SidebarGroup>
-
-                {/* ── Products Section ────────────────────────────── */}
-                <SidebarGroup className="pt-5 pb-0 px-3">
-                    <SidebarGroupLabel className="group-data-[collapsible=icon]:hidden text-[14px] font-medium text-[#787881] h-5 px-0 mb-1.5">
-                        Products
-                    </SidebarGroupLabel>
-                    <SidebarGroupContent>
-                        <SidebarMenu className="gap-1">
-                            {currentNav.products.map((item) => (
-                                <NavItem key={item.title} {...item} />
-                            ))}
-                        </SidebarMenu>
-                    </SidebarGroupContent>
-                </SidebarGroup>
+                {/* ── Dynamic Sections ──────────────────────────── */}
+                {currentNav.sections?.map((section: any) => (
+                    <SidebarGroup key={section.label} className="pt-5 pb-0 px-3">
+                        <SidebarGroupLabel className="group-data-[collapsible=icon]:hidden text-[14px] font-medium text-muted-foreground h-5 px-0 mb-1.5">
+                            {section.label}
+                        </SidebarGroupLabel>
+                        <SidebarGroupContent>
+                            <SidebarMenu className="gap-1">
+                                {section.items.map((item: any) => (
+                                    <div key={item.title} className="relative">
+                                        <NavItem {...item} />
+                                        {item.badge === '+' && (
+                                            <button className="absolute right-1 top-[5px] bg-sidebar-accent border border-sidebar-border rounded-[6px] p-[3px] h-[22px] w-[22px] flex items-center justify-center text-sidebar-foreground/50 hover:text-sidebar-foreground hover:bg-sidebar-accent/80 transition-colors group-data-[collapsible=icon]:hidden">
+                                                <Plus className="h-3 w-3" />
+                                            </button>
+                                        )}
+                                    </div>
+                                ))}
+                            </SidebarMenu>
+                        </SidebarGroupContent>
+                    </SidebarGroup>
+                ))}
 
                 {/* ── Developers Link ─────────────────────────────── */}
                 <SidebarGroup className="pt-4 pb-2 px-3">
@@ -306,9 +461,9 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
             </SidebarContent>
 
             {/* ── Footer: Upgrade CTA ─────────────────────────────── */}
-            <SidebarFooter className="bg-[#0a0a0a] border-t border-[#1a1a1a] px-3 py-3">
+            <SidebarFooter className="bg-sidebar border-t border-sidebar-border px-3 py-3">
                 <div className="group-data-[collapsible=icon]:hidden">
-                    <a
+                    <Link
                         href="#"
                         className="
                             flex items-center gap-2 px-2 py-1.5 w-full rounded-lg
@@ -323,10 +478,10 @@ export function DashboardSidebar({ ...props }: React.ComponentProps<typeof Sideb
                         <div className="flex items-center justify-center h-5 w-5 shrink-0">
                             <Zap className="h-[18px] w-[18px] text-primary group-hover/upgrade:text-primary transition-colors" />
                         </div>
-                        <span className="text-[14px] font-medium text-[#e5e5e8] group-hover/upgrade:text-white transition-colors">
+                        <span className="text-[14px] font-medium text-sidebar-foreground group-hover/upgrade:text-sidebar-accent-foreground transition-colors">
                             Upgrade
                         </span>
-                    </a>
+                    </Link>
                 </div>
                 {/* Collapsed icon-only state */}
                 <div className="hidden group-data-[collapsible=icon]:flex items-center justify-center">

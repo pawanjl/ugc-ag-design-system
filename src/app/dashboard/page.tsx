@@ -1,7 +1,22 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card as PremiumCard } from "@/components/ds/Card"
 import { BarChart3, Bot, Mic, Sparkles } from "lucide-react"
 import { StaggerContainer, StaggerItem } from "@/components/animations/stagger-container"
 import { SlideUp } from "@/components/animations/slide-up"
+import { toast } from "sonner"
+import { Button } from "@/components/ui/button/button"
+import { Divider } from "@/components/ds/Divider"
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
+import {
+    Modal,
+    ModalContent,
+    ModalDescription,
+    ModalFooter,
+    ModalHeader,
+    ModalTitle,
+    ModalTrigger,
+    ModalClose,
+} from "@/components/ds/Modal"
 
 export default function DashboardPage() {
     const metrics = [
@@ -38,32 +53,132 @@ export default function DashboardPage() {
             </StaggerContainer>
 
             <StaggerContainer className="grid gap-4 md:grid-cols-2 lg:grid-cols-7 mt-2">
-                <StaggerItem className="col-span-4 block">
-                    <Card className="h-full bg-card border-border rounded-xl overflow-hidden">
-                        <CardHeader>
-                            <CardTitle className="text-card-foreground">Usage Analytics</CardTitle>
-                        </CardHeader>
-                        <CardContent className="px-6">
-                            <div className="flex h-[350px] items-center justify-center text-muted-foreground/50 border border-dashed border-border rounded-xl bg-background/50">
-                                [Chart Placeholder]
-                            </div>
-                        </CardContent>
-                    </Card>
-                </StaggerItem>
-                <StaggerItem className="col-span-3 block">
-                    <Card className="h-full bg-card border-border rounded-xl overflow-hidden">
-                        <CardHeader>
-                            <CardTitle className="text-card-foreground">Recent Generations</CardTitle>
-                            <CardDescription className="text-muted-foreground">You've generated 14 audio files today.</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="flex h-[350px] items-center justify-center text-muted-foreground/50 border border-dashed border-border rounded-xl bg-background/50">
-                                [List Placeholder]
-                            </div>
-                        </CardContent>
-                    </Card>
-                </StaggerItem>
+                {/* ... existing cells ... */}
             </StaggerContainer>
+
+            <SlideUp className="flex flex-col gap-6 mt-4 pb-20">
+                <div className="flex flex-col gap-1">
+                    <h2 className="text-2xl font-bold tracking-tight text-foreground">Premium Tabs</h2>
+                    <p className="text-muted-foreground">Smooth, context-aware animations built with Radix UI and Framer Motion.</p>
+                </div>
+
+                <div className="grid gap-6 md:grid-cols-2">
+                    {/* Pill Variant */}
+                    <PremiumCard className="flex flex-col gap-6">
+                        <div className="flex flex-col gap-1">
+                            <h3 className="text-lg font-semibold">Pill Style</h3>
+                            <p className="text-sm text-muted-foreground">Floating background indicator that follows the text.</p>
+                        </div>
+                        <Tabs defaultValue="account" variant="pill">
+                            <TabsList className="w-full justify-start">
+                                <TabsTrigger value="account" layoutId="pill-indicator">Account</TabsTrigger>
+                                <TabsTrigger value="password" layoutId="pill-indicator">Password</TabsTrigger>
+                                <TabsTrigger value="settings" layoutId="pill-indicator">Settings</TabsTrigger>
+                            </TabsList>
+                            <TabsContent value="account" className="p-4 border border-dashed rounded-xl bg-muted/10 h-32">
+                                <p className="text-sm">Manage your profile and account settings here.</p>
+                            </TabsContent>
+                            <TabsContent value="password" className="p-4 border border-dashed rounded-xl bg-muted/10 h-32">
+                                <p className="text-sm">Keep your account secure by rotating passwords.</p>
+                            </TabsContent>
+                            <TabsContent value="settings" className="p-4 border border-dashed rounded-xl bg-muted/10 h-32">
+                                <p className="text-sm">Configure your preferred app notifications.</p>
+                            </TabsContent>
+                        </Tabs>
+                    </PremiumCard>
+
+                    {/* Underline Variant */}
+                    <PremiumCard className="flex flex-col gap-6">
+                        <div className="flex flex-col gap-1">
+                            <h3 className="text-lg font-semibold">Underline Style</h3>
+                            <p className="text-sm text-muted-foreground">Minimalist sliding line for clean dashboards.</p>
+                        </div>
+                        <Tabs defaultValue="overview" variant="underline">
+                            <TabsList className="gap-8">
+                                <TabsTrigger value="overview" layoutId="underline-indicator">Overview</TabsTrigger>
+                                <TabsTrigger value="analytics" layoutId="underline-indicator">Analytics</TabsTrigger>
+                                <TabsTrigger value="history" layoutId="underline-indicator">History</TabsTrigger>
+                            </TabsList>
+                            <TabsContent value="overview" className="p-4 border border-dashed rounded-xl bg-muted/10 h-32">
+                                <p className="text-sm">Summary of your recent activities and stats.</p>
+                            </TabsContent>
+                            <TabsContent value="analytics" className="p-4 border border-dashed rounded-xl bg-muted/10 h-32">
+                                <p className="text-sm">Deep dive into usage metrics and patterns.</p>
+                            </TabsContent>
+                            <TabsContent value="history" className="p-4 border border-dashed rounded-xl bg-muted/10 h-32">
+                                <p className="text-sm">Historical record of all your generated assets.</p>
+                            </TabsContent>
+                        </Tabs>
+                    </PremiumCard>
+
+                    {/* Standard/Default Variant */}
+                    <PremiumCard className="flex flex-col gap-6">
+                        <div className="flex flex-col gap-1">
+                            <h3 className="text-lg font-semibold">Default Style</h3>
+                            <p className="text-sm text-muted-foreground">Standard inset background indicator.</p>
+                        </div>
+                        <Tabs defaultValue="all" variant="default">
+                            <TabsList className="grid grid-cols-3 w-full">
+                                <TabsTrigger value="all" layoutId="default-indicator">All</TabsTrigger>
+                                <TabsTrigger value="unread" layoutId="default-indicator">Unread</TabsTrigger>
+                                <TabsTrigger value="archived" layoutId="default-indicator">Archived</TabsTrigger>
+                            </TabsList>
+                            <TabsContent value="all" className="p-4 border border-dashed rounded-xl bg-muted/10 h-32">
+                                <p className="text-sm">Showing all messages in your workspace.</p>
+                            </TabsContent>
+                            <TabsContent value="unread" className="p-4 border border-dashed rounded-xl bg-muted/10 h-32">
+                                <p className="text-sm">You have 5 items that require your attention.</p>
+                            </TabsContent>
+                            <TabsContent value="archived" className="p-4 border border-dashed rounded-xl bg-muted/10 h-32">
+                                <p className="text-sm">No archived conversations found.</p>
+                            </TabsContent>
+                        </Tabs>
+                    </PremiumCard>
+
+                    {/* Ghost Variant */}
+                    <PremiumCard className="flex flex-col gap-6">
+                        <div className="flex flex-col gap-1">
+                            <h3 className="text-lg font-semibold">Ghost Style</h3>
+                            <p className="text-sm text-muted-foreground">Subtle indicators for tertiary navigation.</p>
+                        </div>
+                        <Tabs defaultValue="desktop" variant="ghost">
+                            <TabsList className="w-full justify-start px-0 gap-1">
+                                <TabsTrigger
+                                    value="desktop"
+                                    layoutId="ghost-indicator"
+                                    indicatorClassName="bg-primary/10 shadow-none border border-primary/20"
+                                >
+                                    Desktop
+                                </TabsTrigger>
+                                <TabsTrigger
+                                    value="mobile"
+                                    layoutId="ghost-indicator"
+                                    indicatorClassName="bg-primary/10 shadow-none border border-primary/20"
+                                >
+                                    Mobile
+                                </TabsTrigger>
+                                <TabsTrigger
+                                    value="api"
+                                    layoutId="ghost-indicator"
+                                    indicatorClassName="bg-primary/10 shadow-none border border-primary/20"
+                                >
+                                    API
+                                </TabsTrigger>
+                            </TabsList>
+                            <TabsContent value="desktop" className="p-4 border border-dashed rounded-xl bg-muted/10 h-32">
+                                <p className="text-sm">Optimizing view for large screen devices.</p>
+                            </TabsContent>
+                            <TabsContent value="mobile" className="p-4 border border-dashed rounded-xl bg-muted/10 h-32">
+                                <p className="text-sm">Previewing mobile responsiveness and layout.</p>
+                            </TabsContent>
+                            <TabsContent value="api" className="p-4 border border-dashed rounded-xl bg-muted/10 h-32">
+                                <p className="text-sm">Direct access to raw data and endpoints.</p>
+                            </TabsContent>
+                        </Tabs>
+                    </PremiumCard>
+                </div>
+            </SlideUp>
+
         </div>
     )
 }

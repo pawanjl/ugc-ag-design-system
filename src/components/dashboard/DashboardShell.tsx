@@ -4,12 +4,14 @@ import * as React from "react"
 import { SidebarProvider } from "@/components/ui/sidebar"
 import { DashboardSidebar } from "@/components/dashboard/Sidebar"
 import { Topbar } from "@/components/dashboard/Topbar"
+import { PlatformProvider } from "@/components/dashboard/platform-context"
 import { DockLayout, DockContent, DockPanel } from "@/components/ui/dock-layout"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button/button"
 import { SendIcon } from "lucide-react"
 import { FaqSection } from "@/components/ds/FaqSection"
 import { Divider } from "@/components/ds/Divider"
+import { MobileBottomNav } from "@/components/navigation/MobileBottomNav"
 
 export function DashboardShell({
     children,
@@ -21,27 +23,29 @@ export function DashboardShell({
             <DockLayout className="flex-1 min-h-0 bg-background">
                 {/* ── Main content area (Shrinks when Dock opens) ─────────────────── */}
                 <DockContent className="flex flex-row flex-1 min-w-0 overflow-hidden bg-background p-0">
-                    <SidebarProvider defaultOpen={true} className="flex-1 min-w-0 w-full">
-                        {/* ── Left sidebar ─────────────────────── */}
-                        <DashboardSidebar />
+                    <PlatformProvider>
+                        <SidebarProvider defaultOpen={true} className="flex-1 min-w-0 w-full">
+                            {/* ── Left sidebar ─────────────────────── */}
+                            <DashboardSidebar />
 
-                        {/* ── Main Content Area ─────────────────── */}
-                        <div className="flex flex-1 flex-col min-w-0 overflow-hidden">
-                            {/* Sticky top bar */}
-                            <Topbar />
-                            <Divider />
+                            {/* ── Main Content Area ─────────────────── */}
+                            <div className="flex flex-1 flex-col min-w-0 overflow-hidden">
+                                {/* Sticky top bar */}
+                                <Topbar />
+                                <Divider />
 
-                            {/* Scrollable page content */}
-                            <div className="relative flex-1 min-h-0 overflow-y-auto bg-background styled-scrollbar">
-                                <main className="p-6 lg:p-8" style={{ scrollbarGutter: "stable" }}>
-                                    <div className="mx-auto max-w-6xl space-y-8 pb-12">
-                                        {children}
-                                        <FaqSection />
-                                    </div>
-                                </main>
+                                {/* Scrollable page content */}
+                                <div className="relative flex-1 min-h-0 overflow-y-auto bg-background styled-scrollbar">
+                                    <main className="p-6 lg:p-8" style={{ scrollbarGutter: "stable" }}>
+                                        <div className="mx-auto max-w-6xl space-y-8 pb-12">
+                                            {children}
+                                            <FaqSection />
+                                        </div>
+                                    </main>
+                                </div>
                             </div>
-                        </div>
-                    </SidebarProvider>
+                        </SidebarProvider>
+                    </PlatformProvider>
                 </DockContent>
 
                 {/* ── AI Assistant Dock Panel (Slides from Right) ─────────────────── */}
@@ -83,6 +87,7 @@ export function DashboardShell({
                     </div>
                 </DockPanel>
             </DockLayout>
+            <MobileBottomNav />
         </div>
     )
 }

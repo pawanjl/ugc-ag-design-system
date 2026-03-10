@@ -111,7 +111,7 @@ export function PricingCard({
     return (
         <div
             className={cn(
-                "relative flex flex-col w-[280px] rounded-[20px] pt-6 overflow-hidden",
+                "relative flex flex-col w-full rounded-[20px] pt-6 overflow-hidden",
                 "bg-card/95 backdrop-blur-sm",
                 highlighted
                     ? "ring-2 ring-primary/50 shadow-[0px_0px_0px_1px_rgba(var(--primary),0.2),0px_8px_24px_rgba(0,0,0,0.4)]"
@@ -184,17 +184,17 @@ export function PricingCard({
                             <div
                                 key={fi}
                                 className={cn(
-                                    "flex items-center gap-2 h-[44px]",
-                                    fi < group.length - 1 && "border-b border-border/10"
+                                    "flex items-start gap-3 py-3",
+                                    fi < group.length - 1 && "border-b border-border/5"
                                 )}
                             >
-                                <Check className="w-4 h-4 shrink-0 text-muted-foreground/40" />
-                                <div className="flex flex-col">
-                                    <span className="text-[14px] font-normal leading-5 text-foreground/75">
+                                <Check className="w-4 h-4 shrink-0 text-primary mt-0.5" />
+                                <div className="flex flex-col gap-0.5">
+                                    <span className="text-[14px] font-normal leading-5 text-foreground/80">
                                         {feat.label}
                                     </span>
                                     {feat.subLabel && (
-                                        <span className="text-[12px] text-muted-foreground/40">{feat.subLabel}</span>
+                                        <span className="text-[12px] text-muted-foreground/50 leading-4">{feat.subLabel}</span>
                                     )}
                                 </div>
                             </div>
