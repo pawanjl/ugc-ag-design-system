@@ -121,6 +121,25 @@ const creativeNav = {
         }
     ]
 }
+const mainNavItems = [
+    { title: "Home", url: "/dashboard", icon: Home },
+    { title: "Blogs", url: "/blog", icon: FileText, tag: "New" },
+    { title: "Layouts Showcase", url: "/dashboard/layouts", icon: Layers },
+    { title: "Forms Showcase", url: "/dashboard/forms", icon: FileText },
+    {
+        title: "Voices",
+        url: "#",
+        icon: Mic,
+        badge: "+",
+        subItems: [
+            { title: "Voice Library", url: "#" },
+            { title: "Voice Cloning", url: "#" },
+            { title: "Voice Design", url: "#" },
+        ]
+    },
+    { title: "Files", url: "#", icon: FileText, badge: "3" },
+    { title: "Billing", url: "/dashboard/billing", icon: CreditCard },
+]
 
 const apiNav = {
     main: [
@@ -147,7 +166,7 @@ const apiNav = {
             label: "Monitor",
             items: [
                 { title: "Analytics", url: "/dashboard/analytics", icon: BarChart3 },
-            { title: "Request Log", url: "/dashboard/request-log", icon: History },
+                { title: "Request Log", url: "/dashboard/request-log", icon: History },
             ]
         }
     ]
@@ -176,7 +195,7 @@ const agentsNav = {
             label: "Monitor",
             items: [
                 { title: "Analytics", url: "/dashboard/analytics", icon: BarChart3 },
-            { title: "Request Log", url: "/dashboard/request-log", icon: History },
+                { title: "Request Log", url: "/dashboard/request-log", icon: History },
             ]
         },
         {
@@ -213,6 +232,14 @@ const platformNavConfig: Record<Platform, PlatformNavConfig> = {
     elevenAgents: agentsNav,
     elevenAPI: apiNav,
 }
+const productsItems = [
+    { title: "Studio", url: "/studio", icon: Layers },
+    { title: "Audiobooks", url: "#", icon: BookOpen, tag: "New" },
+    { title: "Dubbing", url: "#", icon: Globe2 },
+    { title: "Speech to Text", url: "#", icon: FileAudio },
+    { title: "Audio Native", url: "#", icon: Clapperboard },
+    { title: "Productions", url: "#", icon: Mic },
+]
 
 // ── Sidebar Nav Item ─────────────────────────────────────────────────────────
 
