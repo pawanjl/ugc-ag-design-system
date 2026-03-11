@@ -60,7 +60,8 @@ import { usePathname } from "next/navigation"
 
 const mainNavItems = [
     { title: "Home", url: "/dashboard", icon: Home },
-    { title: "Layouts Showcase", url: "/dashboard/layouts", icon: Layers, tag: "New" },
+    { title: "Blogs", url: "/blog", icon: FileText, tag: "New" },
+    { title: "Layouts Showcase", url: "/dashboard/layouts", icon: Layers },
     { title: "Forms Showcase", url: "/dashboard/forms", icon: FileText },
     { 
         title: "Voices", 
@@ -88,7 +89,7 @@ const playgroundItems = [
 ]
 
 const productsItems = [
-    { title: "Studio", url: "#", icon: Layers },
+    { title: "Studio", url: "/studio", icon: Layers },
     { title: "Audiobooks", url: "#", icon: BookOpen, tag: "New" },
     { title: "Dubbing", url: "#", icon: Globe2 },
     { title: "Speech to Text", url: "#", icon: FileAudio },
